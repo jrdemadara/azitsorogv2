@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\LigaBarangayResource\Pages;
@@ -12,7 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use ZipArchive;
 
 class LigaBarangayResource extends Resource
@@ -82,16 +81,16 @@ class LigaBarangayResource extends Resource
                 Tables\Actions\Action::make('Download')
                     ->form([
                         Grid::make(2) // 👈 Arrange the next two fields in one row
-                        ->schema([
-                            TextInput::make('start')
-                                ->label('Start ID')
-                                ->numeric()
-                                ->required(),
-                            TextInput::make('end')
-                                ->label('End ID')
-                                ->numeric()
-                                ->required(),
-                        ]),
+                            ->schema([
+                                TextInput::make('start')
+                                    ->label('Start ID')
+                                    ->numeric()
+                                    ->required(),
+                                TextInput::make('end')
+                                    ->label('End ID')
+                                    ->numeric()
+                                    ->required(),
+                            ]),
 
                     ])
                     ->modalHeading('Download')
@@ -118,19 +117,17 @@ class LigaBarangayResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListLigaBarangays::route('/'),
+            'index'  => Pages\ListLigaBarangays::route('/'),
             'create' => Pages\CreateLigaBarangay::route('/create'),
-            'edit' => Pages\EditLigaBarangay::route('/{record}/edit'),
+            'edit'   => Pages\EditLigaBarangay::route('/{record}/edit'),
         ];
     }
-
 
     /**
      * Export Data as ZIP with CSV and Images
      */
-    public static function exportData(int $start, int $end)
+    public static function exportData($start, $end)
     {
-        // Fetch data
         $results = LigaBarangay::select(
             'id', 'lastname', 'firstname', 'middlename', 'extension',
             'home_address', 'gender', 'birthdate', 'region', 'province',
@@ -141,58 +138,48 @@ class LigaBarangayResource extends Resource
             ->orderBy('id', 'asc')
             ->get();
 
-        // Create temporary folder
-        $tempPath = storage_path('app/temp_export');
-        File::ensureDirectoryExists($tempPath);
+        // Create a ZIP file
+        $zipFileName = "download_{$start}_{$end}.zip";
+        $zipPath     = storage_path("app/public/{$zipFileName}");
 
-        // Generate CSV file
-        $csvPath = "{$tempPath}/barangay_data.csv";
-        $csvFile = fopen($csvPath, 'w');
-        fputcsv($csvFile, array_keys($results->first()->toArray())); // Headers
-
-        foreach ($results as $row) {
-            fputcsv($csvFile, $row->toArray());
-            self::copyImageToTemp($row->id, 'photo', $tempPath);
-            self::copyImageToTemp($row->id, 'signature', $tempPath);
-        }
-        fclose($csvFile);
-
-        // Create ZIP file
-        $zipPath = storage_path("app/barangay_export_{$start}_{$end}.zip");
         $zip = new ZipArchive();
-        if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
-            // Add CSV to ZIP
-            $zip->addFile($csvPath, 'barangay_data.csv');
+        if ($zip->open($zipPath, ZipArchive::CREATE) === true) {
+            // Add CSV file
+            $csvData = static::generateCSV($results);
+            $zip->addFromString("results_{$start}_{$end}.csv", $csvData);
 
-            // Add images to ZIP
-            foreach (['photo', 'signature'] as $folder) {
-                $folderPath = "{$tempPath}/{$folder}";
-                if (File::exists($folderPath)) {
-                    foreach (File::files($folderPath) as $file) {
-                        $zip->addFile($file->getRealPath(), "{$folder}/" . $file->getFilename());
-                    }
-                }
+            // Add images
+            foreach ($results as $person) {
+                static::addFileToZip($zip, 'profiles/' . $person->photo, 'profiles', $person->id, 'jpg');
+                static::addFileToZip($zip, 'signatures/' . $person->signature, 'signatures', $person->id, 'png');
             }
+
             $zip->close();
+
+            return response()->download($zipPath)->deleteFileAfterSend(true);
         }
 
-        // Clean up temporary files
-        File::deleteDirectory($tempPath);
-
-        return response()->download($zipPath)->deleteFileAfterSend(true);
+        return response()->json(['message' => 'Unable to create ZIP file'], 500);
     }
 
-    /**
-     * Copy image from external storage
-     */
-    public static function copyImageToTemp($id, $folder, $tempPath)
+    private static function generateCSV($results)
     {
-        $storagePath = storage_path("../../azitsorog-backend/storage/app/{$folder}/{$id}.jpg");
-        $destinationPath = "{$tempPath}/{$folder}/{$id}.jpg";
+        $csv = "ID, Lastname, Firstname, Middlename, Extension, Gender, Birthdate, Region, Province, City, Barangay\n";
 
-        if (File::exists($storagePath)) {
-            File::ensureDirectoryExists(dirname($destinationPath));
-            File::copy($storagePath, $destinationPath);
+        foreach ($results as $person) {
+            $csv .= "{$person->id}, {$person->lastname}, {$person->firstname}, {$person->middlename}, {$person->extension}, ";
+            $csv .= "{$person->gender}, {$person->birthdate}, {$person->region}, {$person->province}, {$person->city}, {$person->barangay}\n";
+        }
+
+        return $csv;
+    }
+
+    private static function addFileToZip($zip, $filePath, $folder, $id, $extension)
+    {
+        // Storage disk is `external_storage` as defined in config/filesystems.php
+        if (Storage::disk('external_storage')->exists($filePath)) {
+            $fileContent = Storage::disk('external_storage')->get($filePath);
+            $zip->addFromString("{$folder}/{$id}.{$extension}", $fileContent);
         }
     }
 }
