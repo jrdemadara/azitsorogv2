@@ -164,11 +164,12 @@ class LigaBarangayResource extends Resource
 
     private static function generateCSV($results)
     {
-        $csv = "ID, Lastname, Firstname, Middlename, Extension, Gender, Birthdate, Region, Province, City, Barangay\n";
+        $csv = "ID, Lastname, Firstname, Middlename, Extension, Gender, Birthdate, Region, Province, City, Barangay, Emergency Contact Person, Emergency Contact Number, Year Elected, Term \n";
 
         foreach ($results as $person) {
             $csv .= "{$person->id}, {$person->lastname}, {$person->firstname}, {$person->middlename}, {$person->extension}, ";
             $csv .= "{$person->gender}, {$person->birthdate}, {$person->region}, {$person->province}, {$person->city}, {$person->barangay}\n";
+            $csv .= "{$person->emergency_contact_person}, {$person->emergency_contact_number}, {$person->year_elected}, {$person->term}\n";
         }
 
         return $csv;
@@ -176,6 +177,8 @@ class LigaBarangayResource extends Resource
 
     private static function addFileToZip($zip, $filePath, $folder, $id, $extension)
     {
+        $filePath = "private/{$filePath}";
+
         // Storage disk is `external_storage` as defined in config/filesystems.php
         if (Storage::disk('external_storage')->exists($filePath)) {
             $fileContent = Storage::disk('external_storage')->get($filePath);
