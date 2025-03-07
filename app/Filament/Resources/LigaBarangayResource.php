@@ -128,6 +128,8 @@ class LigaBarangayResource extends Resource
      */
     public static function exportData($start, $end)
     {
+        set_time_limit(300);
+
         $results = LigaBarangay::select(
             'id',
             'lastname',
