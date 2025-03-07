@@ -129,10 +129,24 @@ class LigaBarangayResource extends Resource
     public static function exportData($start, $end)
     {
         $results = LigaBarangay::select(
-            'id', 'lastname', 'firstname', 'middlename', 'extension',
-            'home_address', 'gender', 'birthdate', 'region', 'province',
-            'city', 'barangay', 'signature', 'photo', 'emergency_contact_person',
-            'emergency_contact_number', 'year_elected', 'term'
+            'id',
+            'lastname',
+            'firstname',
+            'middlename',
+            'extension',
+            'home_address',
+            'gender',
+            'birthdate',
+            'region',
+            'province',
+            'city',
+            'barangay',
+            'signature',
+            'photo',
+            'emergency_contact_person',
+            'emergency_contact_number',
+            'year_elected',
+            'term'
         )
             ->whereBetween('id', [$start, $end])
             ->orderBy('id', 'asc')
@@ -167,9 +181,7 @@ class LigaBarangayResource extends Resource
         $csv = "ID, Lastname, Firstname, Middlename, Extension, Gender, Birthdate, Region, Province, City, Barangay, Emergency Contact Person, Emergency Contact Number, Year Elected, Term \n";
 
         foreach ($results as $person) {
-            $csv .= "{$person->id}, {$person->lastname}, {$person->firstname}, {$person->middlename}, {$person->extension}, ";
-            $csv .= "{$person->gender}, {$person->birthdate}, {$person->region}, {$person->province}, {$person->city}, {$person->barangay}\n";
-            $csv .= "{$person->emergency_contact_person}, {$person->emergency_contact_number}, {$person->year_elected}, {$person->term}\n";
+            $csv .= "{$person->id}, {$person->lastname}, {$person->firstname}, {$person->middlename}, {$person->extension}, {$person->gender}, {$person->birthdate}, {$person->region}, {$person->province}, {$person->city}, {$person->barangay}, {$person->emergency_contact_person}, {$person->emergency_contact_number}, {$person->year_elected}, {$person->term}";
         }
 
         return $csv;
