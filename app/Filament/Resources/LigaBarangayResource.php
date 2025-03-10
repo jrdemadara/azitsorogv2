@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\LigaBarangayResource\Pages;
@@ -81,16 +82,16 @@ class LigaBarangayResource extends Resource
                 Tables\Actions\Action::make('Download')
                     ->form([
                         Grid::make(2) // 👈 Arrange the next two fields in one row
-                            ->schema([
-                                TextInput::make('start')
-                                    ->label('Start ID')
-                                    ->numeric()
-                                    ->required(),
-                                TextInput::make('end')
-                                    ->label('End ID')
-                                    ->numeric()
-                                    ->required(),
-                            ]),
+                        ->schema([
+                            TextInput::make('start')
+                                ->label('Start ID')
+                                ->numeric()
+                                ->required(),
+                            TextInput::make('end')
+                                ->label('End ID')
+                                ->numeric()
+                                ->required(),
+                        ]),
 
                     ])
                     ->modalHeading('Download')
@@ -117,9 +118,9 @@ class LigaBarangayResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListLigaBarangays::route('/'),
+            'index' => Pages\ListLigaBarangays::route('/'),
             'create' => Pages\CreateLigaBarangay::route('/create'),
-            'edit'   => Pages\EditLigaBarangay::route('/{record}/edit'),
+            'edit' => Pages\EditLigaBarangay::route('/{record}/edit'),
         ];
     }
 
@@ -156,7 +157,7 @@ class LigaBarangayResource extends Resource
 
         // Create a ZIP file
         $zipFileName = "download_{$start}_{$end}.zip";
-        $zipPath     = storage_path("app/public/{$zipFileName}");
+        $zipPath = storage_path("app/public/{$zipFileName}");
 
         $zip = new ZipArchive();
         if ($zip->open($zipPath, ZipArchive::CREATE) === true) {
@@ -180,10 +181,10 @@ class LigaBarangayResource extends Resource
 
     private static function generateCSV($results)
     {
-        $csv = "ID, Lastname, Firstname, Middlename, Extension, Gender, Birthdate, Region, Province, City, Barangay, Emergency Contact Person, Emergency Contact Number, Year Elected, Term \n";
+        $csv = "ID, Lastname, Firstname, Middlename, Extension, Gender, Birthdate, Home Address, Region, Province, City, Barangay, Emergency Contact Person, Emergency Contact Number, Year Elected, Term \n";
 
         foreach ($results as $person) {
-            $csv .= "{$person->id}, {$person->lastname}, {$person->firstname}, {$person->middlename}, {$person->extension}, {$person->gender}, {$person->birthdate}, {$person->region}, {$person->province}, {$person->city}, {$person->barangay}, {$person->emergency_contact_person}, {$person->emergency_contact_number}, {$person->year_elected}, {$person->term}\n";
+            $csv .= "{$person->id}, {$person->lastname}, {$person->firstname}, {$person->middlename}, {$person->extension}, {$person->gender}, {$person->birthdate}, {$person->home_address}, {$person->region}, {$person->province}, {$person->city}, {$person->barangay}, {$person->emergency_contact_person}, {$person->emergency_contact_number}, {$person->year_elected}, {$person->term}\n";
         }
 
         return $csv;
