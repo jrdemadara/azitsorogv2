@@ -184,10 +184,37 @@ class LigaBarangayResource extends Resource
         $csv = "ID, Lastname, Firstname, Middlename, Extension, Gender, Birthdate, Home Address, Region, Province, City, Barangay, Emergency Contact Person, Emergency Contact Number, Year Elected, Term \n";
 
         foreach ($results as $person) {
-            $csv .= "{$person->id}, {$person->lastname}, {$person->firstname}, {$person->middlename}, {$person->extension}, {$person->gender}, {$person->birthdate}, {$person->home_address}, {$person->region}, {$person->province}, {$person->city}, {$person->barangay}, {$person->emergency_contact_person}, {$person->emergency_contact_number}, {$person->year_elected}, {$person->term}\n";
+            $csv .= self::escapeCSV([
+                    $person->id,
+                    $person->lastname,
+                    $person->firstname,
+                    $person->middlename,
+                    $person->extension,
+                    $person->gender,
+                    $person->birthdate,
+                    $person->home_address,
+                    $person->region,
+                    $person->province,
+                    $person->city,
+                    $person->barangay,
+                    $person->emergency_contact_person,
+                    $person->emergency_contact_number,
+                    $person->year_elected,
+                    $person->term
+                ]) . "\n";
         }
 
         return $csv;
+    }
+
+    private static function escapeCSV($fields)
+    {
+        return implode(',', array_map(function ($field) {
+            // Escape double quotes by replacing " with ""
+            $escaped = str_replace('"', '""', $field);
+            // Wrap the field in double quotes if it contains a comma or double quotes
+            return (strpos($escaped, ',') !== false || strpos($escaped, '"') !== false) ? "\"$escaped\"" : $escaped;
+        }, $fields));
     }
 
     private static function addFileToZip($zip, $filePath, $folder, $id, $extension)
