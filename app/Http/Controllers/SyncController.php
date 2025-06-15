@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LigaBarangay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class SyncController extends Controller
 {
@@ -83,9 +84,28 @@ class SyncController extends Controller
             return null;
         }
 
-        $fileContents = Storage::disk("external_storage")->get($path);
-        $mime = Storage::disk("external_storage")->mimeType($path);
+        $disk = Storage::disk("external_storage");
+        $fileSize = $disk->size($path); // in bytes
 
-        return "data:" . $mime . ";base64," . base64_encode($fileContents);
+        // If the image is larger than 500KB (512000 bytes), compress it
+        if ($fileSize > 512000) {
+            $image = Image::make($disk->get($path))
+                ->resize(800, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })
+                ->encode("jpg", 70); // Compress to 70% quality
+
+            $mime = "image/jpeg"; // After encoding as jpg
+            $base64 = base64_encode((string) $image);
+
+            return "data:$mime;base64,$base64";
+        }
+
+        // Otherwise, just base64 encode the original
+        $fileContents = $disk->get($path);
+        $mime = $disk->mimeType($path);
+
+        return "data:$mime;base64," . base64_encode($fileContents);
     }
 }
