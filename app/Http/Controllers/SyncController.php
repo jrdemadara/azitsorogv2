@@ -26,6 +26,8 @@ class SyncController extends Controller
             "last_id" => "nullable|integer",
         ]);
 
+        ini_set("memory_limit", "512M");
+
         $limit = $request->input("limit");
         $lastId = $request->input("last_id", 0);
 
