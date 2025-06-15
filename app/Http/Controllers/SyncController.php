@@ -86,26 +86,36 @@ class SyncController extends Controller
 
         $disk = Storage::disk("external_storage");
         $fileSize = $disk->size($path); // in bytes
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
 
-        // If the image is larger than 500KB (512000 bytes), compress it
-        if ($fileSize > 512000) {
-            $image = Image::make($disk->get($path))
+        $fileContents = $disk->get($path);
+
+        // Handle JPG photos > 500KB
+        if (in_array(strtolower($extension), ["jpg", "jpeg"]) && $fileSize > 512000) {
+            $image = Image::make($fileContents)
                 ->resize(800, null, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })
-                ->encode("jpg", 70); // Compress to 70% quality
+                ->encode("jpg", 70); // compress
 
-            $mime = "image/jpeg"; // After encoding as jpg
-            $base64 = base64_encode((string) $image);
-
-            return "data:$mime;base64,$base64";
+            return "data:image/jpeg;base64," . base64_encode((string) $image);
         }
 
-        // Otherwise, just base64 encode the original
-        $fileContents = $disk->get($path);
-        $mime = $disk->mimeType($path);
+        // Handle PNG signatures > 500KB (resize only, no compression)
+        if (strtolower($extension) === "png" && $fileSize > 512000) {
+            $image = Image::make($fileContents)
+                ->resize(800, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })
+                ->encode("png"); // keep PNG
 
-        return "data:$mime;base64," . base64_encode($fileContents);
+            return "data:image/png;base64," . base64_encode((string) $image);
+        }
+
+        // Fallback: original file
+        $mime = $disk->mimeType($path);
+        return "data:" . $mime . ";base64," . base64_encode($fileContents);
     }
 }
