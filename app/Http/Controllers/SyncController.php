@@ -52,7 +52,7 @@ class SyncController extends Controller
                 "barangay" => $profile->barangay,
                 "year_elected" => $profile->year_elected,
                 "term" => $profile->term,
-                "photo" => $this->getBase64FromStorage("photos/" . $profile->photo),
+                "photo" => $this->getBase64FromStorage("profiles/" . $profile->photo),
                 "signature" => $this->getBase64FromStorage("signatures/" . $profile->signature),
             ];
         });
