@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\LigaBarangay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class SyncController extends Controller
 {
@@ -86,35 +87,32 @@ class SyncController extends Controller
 
         $disk = Storage::disk("external_storage");
         $fileSize = $disk->size($path); // in bytes
-        $extension = pathinfo($path, PATHINFO_EXTENSION);
+        $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
 
         $fileContents = $disk->get($path);
 
-        // Handle JPG photos > 500KB
-        if (in_array(strtolower($extension), ["jpg", "jpeg"]) && $fileSize > 512000) {
-            $image = Image::make($fileContents)
-                ->resize(800, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                })
-                ->encode("jpg", 70); // compress
+        // Only modify if over 500KB
+        if ($fileSize > 512000) {
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($fileContents);
 
-            return "data:image/jpeg;base64," . base64_encode((string) $image);
+            // Resize to width 800 if larger, maintain aspect ratio
+            $image->scale(width: 800);
+
+            if (in_array($extension, ["jpg", "jpeg"])) {
+                // Compress JPEG to 70%
+                $encoded = $image->toJpeg(quality: 70);
+                return "data:image/jpeg;base64," . base64_encode($encoded);
+            }
+
+            if ($extension === "png") {
+                // Keep PNG format (lossless)
+                $encoded = $image->toPng();
+                return "data:image/png;base64," . base64_encode($encoded);
+            }
         }
 
-        // Handle PNG signatures > 500KB (resize only, no compression)
-        if (strtolower($extension) === "png" && $fileSize > 512000) {
-            $image = Image::make($fileContents)
-                ->resize(800, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                })
-                ->encode("png"); // keep PNG
-
-            return "data:image/png;base64," . base64_encode((string) $image);
-        }
-
-        // Fallback: original file
+        // Fallback to original
         $mime = $disk->mimeType($path);
         return "data:" . $mime . ";base64," . base64_encode($fileContents);
     }
