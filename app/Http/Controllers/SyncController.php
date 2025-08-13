@@ -35,7 +35,7 @@ class SyncController extends Controller
 
         // Use id > last_id for cursor-based pagination
         $profiles = LigaBarangay::where("is_downloaded", false)
-            ->where("id", ">", $lastId)
+            // ->where("id", ">", $lastId)
             ->orderBy("id", "asc")
             ->limit($limit)
             ->get();
