@@ -1,18 +1,4 @@
-<script setup>
-import {
-    Phone,
-    Mail,
-    Download,
-    Facebook,
-    GaugeCircle,
-    CircleArrowRight,
-    Handshake,
-    LandPlot,
-    Landmark,
-    Building,
-    Printer,
-} from "lucide-vue-next";
-</script>
+<script setup></script>
 
 <template>
     <div class="flex flex-col min-h-screen">
