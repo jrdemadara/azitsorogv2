@@ -1,6 +1,9 @@
-import './bootstrap';
-import WelcomePage from './Pages/Welcome.vue';
-import {createApp} from "vue";
-import '../css/app.css';
+import "./bootstrap";
+import App from "./App.vue";
+import { createApp } from "vue";
+import "../css/app.css";
+import router from "./router";
 
-createApp(WelcomePage).mount('#app');
+const app = createApp(App);
+app.use(router);
+app.mount("#app");
