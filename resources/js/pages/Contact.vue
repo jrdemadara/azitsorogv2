@@ -49,23 +49,6 @@ import {
                         <h6 class="text-xl">+63 917 676 3907</h6>
                         <Smartphone :size="20" />
                     </a>
-
-                    <a
-                        href="tel:+639176763907"
-                        class="flex justify-between items-center hover:bg-blue-500 hover:text-white p-2 rounded"
-                    >
-                        <h6 class="text-xl">+63 917 676 3907</h6>
-                        <Smartphone :size="20" />
-                    </a>
-
-                    <a
-                        href="tel:+639176763907"
-                        class="flex justify-between items-center hover:bg-blue-500 hover:text-white p-2 rounded"
-                    >
-                        <h6 class="text-xl">+63 917 676 3907</h6>
-                        <Smartphone :size="20" />
-                    </a>
-
                     <a
                         href="tel:+63289351542"
                         class="flex justify-between items-center hover:bg-blue-500 hover:text-white p-2 rounded"
