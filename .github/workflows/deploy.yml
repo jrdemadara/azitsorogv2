@@ -24,5 +24,6 @@ jobs:
             git fetch --all
             git reset --hard origin/main
             composer install --no-dev --optimize-autoloader
-            npm install --production && npm run build
+            npm install
+            npm run build
             systemctl reload php8.2-fpm nginx
