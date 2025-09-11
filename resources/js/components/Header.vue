@@ -28,8 +28,9 @@ onBeforeUnmount(() => {
             <div class="flex flex-row items-center w-fit">
                 <span>🇵🇭</span>
                 <small class="ml-2 text-xs lg:text-sm text-slate-50 whitespace-nowrap truncate">
-                    No. 103 Gloria St. Corner Ortigas Ext., Marick Subd., Cainta, Rizal Philippines
-                    1900
+                    No. 103 Gloria St. Corner Ortigas Ext., Marick Subd.,
+                    <br class="block lg:hidden" />
+                    Cainta, Rizal Philippines 1900
                 </small>
             </div>
         </div>
