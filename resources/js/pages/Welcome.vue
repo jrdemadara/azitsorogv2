@@ -10,7 +10,6 @@ import {
     Building,
     Printer,
 } from "lucide-vue-next";
-//test deploy
 </script>
 
 <template>
