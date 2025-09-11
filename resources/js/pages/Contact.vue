@@ -28,7 +28,9 @@ import {
                     1900
                 </a>
             </div>
-            <div class="flex flex-col lg:flex-row justify-center w-full space-x-2">
+            <div
+                class="flex flex-col lg:flex-row justify-center w-full space-y-5 lg:space-y-0 lg:space-x-2"
+            >
                 <div class="flex flex-col w-full h-fit rounded-md shadow p-4">
                     <div class="flex items-center text-lg mb-2 text-blue-600">
                         <MessageCircle class="mr-1" :size="20" />
