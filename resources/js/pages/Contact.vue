@@ -140,7 +140,7 @@ import {
                             <span>Technical & Sales Support:</span>
                         </div>
                         <a
-                            href="tel:+63286568605"
+                            href="tel:+639175162251"
                             class="flex justify-between font-semibold items-center hover:bg-blue-500 mt-2 hover:text-white p-2 rounded"
                         >
                             <h6 class="text-xl">
