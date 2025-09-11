@@ -32,8 +32,12 @@ import {
                         </button>
                     </RouterLink>
                 </div>
-                <div class="flex justify-center items-center w-full py-5 lg:py-20">
-                    <img alt="illustration" src="../../images/background.png" width="1000" />
+                <div class="flex justify-end lg:items-center w-full items-end lg:py-20">
+                    <img
+                        alt="illustration"
+                        src="../../images/background.png"
+                        class="w-full h-full"
+                    />
                 </div>
             </section>
 
