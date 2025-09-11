@@ -16,16 +16,17 @@ import {
     Copy,
     Smartphone,
     MessageCircle,
+    HandHeart,
 } from "lucide-vue-next";
 </script>
 
 <template>
-    <div class="flex justify-center items-center py-16 px-32">
+    <div class="flex justify-center items-center py-16 px-6 lg:px-32">
         <div class="flex flex-col justify-center items-center max-w-1/2">
             <h2 class="font-semibold text-4xl mb-6 text-blue-600">Get in Touch</h2>
             <div class="flex flex-col h-fit rounded-md shadow p-4 mb-5 w-full">
-                <div class="flex items-center text-lg">
-                    <MapPinHouse class="text-slate-800" :size="20" /> <span>Visit us at:</span>
+                <div class="flex items-center text-lg text-blue-600">
+                    <MapPinHouse :size="20" /> <span>Visit us at:</span>
                 </div>
                 <a
                     href="https://www.google.com/maps/search/?api=1&query=No.+103+Gloria+St.+Corner+Ortigas+Ext.,+Marick+Subd.,+Cainta,+Rizal+Philippines+1900"
@@ -37,10 +38,10 @@ import {
                     1900
                 </a>
             </div>
-            <div class="flex justify-center w-full space-x-2">
+            <div class="flex flex-col lg:flex-row justify-center w-full space-x-2">
                 <div class="flex flex-col w-full h-fit rounded-md shadow p-4">
-                    <div class="flex items-center text-lg mb-2">
-                        <MessageCircle class="text-slate-800 mr-1" :size="20" />
+                    <div class="flex items-center text-lg mb-2 text-blue-600">
+                        <MessageCircle class="mr-1" :size="20" />
                         <span>Call or Message us:</span>
                     </div>
                     <a
@@ -133,8 +134,8 @@ import {
                 </div>
                 <div class="flex flex-col w-full h-fit rounded-md shadow p-4 space-y-2">
                     <div class="flex flex-col h-fit p-4">
-                        <div class="flex items-center text-lg">
-                            <Mail class="text-slate-800 mr-1" :size="20" /> <span>Email us:</span>
+                        <div class="flex items-center text-lg text-blue-600">
+                            <Mail class="mr-1" :size="20" /> <span>Email us:</span>
                         </div>
                         <a
                             href="mailto:president@azitsoroginc.com"
@@ -145,8 +146,8 @@ import {
                     </div>
                     <hr />
                     <div class="flex flex-col h-fit p-4">
-                        <div class="flex items-center text-lg">
-                            <Facebook class="text-slate-800 mr-1" :size="20" />
+                        <div class="flex items-center text-lg text-blue-600">
+                            <Facebook class="mr-1" :size="20" />
                             <span>Message us:</span>
                         </div>
                         <a
@@ -159,8 +160,8 @@ import {
                     </div>
                     <hr />
                     <div class="flex flex-col h-fit p-4">
-                        <div class="flex items-center text-lg">
-                            <Instagram class="text-slate-800 mr-1" :size="20" />
+                        <div class="flex items-center text-lg text-blue-600">
+                            <HandHeart class="mr-1" :size="20" />
                             <span>Technical & Sales Support:</span>
                         </div>
                         <a
