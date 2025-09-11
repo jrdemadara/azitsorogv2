@@ -19,10 +19,10 @@ import {
         <section id="about" class="min-h-screen flex flex-col justify-center items-center">
             <div class="flex flex-col items-center text-center">
                 <img alt="logo" class="mb-4 mt-8" src="../../images/logo.png" width="100" />
-                <h2 class="font-bold text-2xl mb-6">Azitsorog Inc.</h2>
+                <h2 class="font-bold text-2xl">Azitsorog Inc.</h2>
                 <div class="bg-white p-8 rounded-lg max-w-4xl">
                     <section id="about" class="mb-8">
-                        <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                        <h1 class="text-3xl font-bold text-gray-900 mb-4">
                             About Azitsorog Incorporated
                         </h1>
                         <p class="text-lg text-gray-700 leading-relaxed">
