@@ -348,12 +348,12 @@ const products = [
                                 </div>
 
                                 <div
-                                    class="flex items-center justify-center rounded-2xl bg-slate-100 dark:bg-white/5"
+                                    class="flex flex-1 items-center justify-center rounded-2xl p-4 bg-slate-100 dark:bg-white/5"
                                 >
                                     <img
-                                        :src="`/images/${product.name}.png`"
+                                        :src="`/images/${product.name}.jpg`"
                                         :alt="`${product.name} preview`"
-                                        class="h-48 w-full rounded-xl object-cover"
+                                        class="h-40 w-full rounded-xl object-contain"
                                     />
                                 </div>
                             </div>
