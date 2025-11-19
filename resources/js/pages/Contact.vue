@@ -1,182 +1,196 @@
 <script setup>
+import { ref } from "vue";
+import { RouterLink } from "vue-router";
 import {
+    MapPinHouse,
     Phone,
+    Smartphone,
     Mail,
     Facebook,
-    MapPinHouse,
-    Smartphone,
-    MessageCircle,
     HandHeart,
+    MessageCircle,
+    ArrowUpRight,
 } from "lucide-vue-next";
+
+const contactGroups = [
+    {
+        title: "Front desk & officers",
+        icon: Phone,
+        entries: [
+            { label: "+63 919 991 7747", href: "tel:+639199917747" },
+            { label: "+63 917 676 3907", href: "tel:+639176763907" },
+            { label: "+63 2 8935 1542", href: "tel:+63289351542" },
+            { label: "+63 2 8938 7214", href: "tel:+63289387214" },
+            { label: "+63 2 8990 2306", href: "tel:+63289902306" },
+            { label: "+63 2 8656 5899", href: "tel:+63286565899" },
+            { label: "+63 2 8404 4187", href: "tel:+63284044187" },
+            { label: "+63 2 8404 4834", href: "tel:+63284044834" },
+            { label: "+63 2 8656 8605", href: "tel:+63286568605" },
+        ],
+    },
+    {
+        title: "Technical & sales support",
+        icon: HandHeart,
+        entries: [
+            { label: "Luzon: +63 917 516 2251", href: "tel:+639175162251" },
+            { label: "Visayas: +63 917 806 0854", href: "tel:+639178060854" },
+            { label: "Mindanao: +63 999 839 0945", href: "tel:+639998390945" },
+            { label: "Mindanao landline: 082 224 6928", href: "tel:0822246928" },
+        ],
+    },
+];
+
+const message = ref({
+    name: "",
+    email: "",
+    company: "",
+    notes: "",
+});
 </script>
 
 <template>
-    <div class="flex justify-center items-center py-16 px-6 lg:px-32">
-        <div class="flex flex-col justify-center items-center max-w-1/2">
-            <h2 class="font-semibold text-4xl mb-6 text-blue-600">Get in Touch</h2>
-            <div class="flex flex-col h-fit rounded-md shadow p-4 mb-5 w-full">
-                <div class="flex items-center text-lg text-blue-600">
-                    <MapPinHouse :size="20" /> <span>Visit us at:</span>
+    <div class="bg-slate-50 py-16">
+        <div class="mx-auto flex max-w-6xl flex-col gap-12 px-6 lg:flex-row">
+            <div class="flex-1 space-y-8">
+                <div class="space-y-3">
+                    <p class="text-xs font-semibold uppercase tracking-[0.4em] text-blue-400">
+                        Contact Azitsorog
+                    </p>
+                    <h1 class="text-3xl font-bold text-slate-900 sm:text-4xl">
+                        Talk to a Matica-certified partner
+                    </h1>
+                    <p class="text-slate-600">
+                        Share your issuance, engraving, or access-control plans—we’ll route you to
+                        the right regional engineers.
+                    </p>
                 </div>
-                <a
-                    href="https://www.google.com/maps/search/?api=1&query=No.+103+Gloria+St.+Corner+Ortigas+Ext.,+Marick+Subd.,+Cainta,+Rizal+Philippines+1900"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="font-semibold text-2xl mt-2 hover:text-blue-600"
-                >
-                    No. 103 Gloria St. Corner Ortigas Ext., Marick Subd., Cainta, Rizal Philippines
-                    1900
-                </a>
+                <div class="rounded-3xl border border-white bg-white p-6 shadow-lg">
+                    <div class="flex items-start gap-3 text-slate-700">
+                        <MapPinHouse class="text-blue-500" :size="24" />
+                        <div>
+                            <p class="text-xs font-semibold uppercase tracking-[0.4em] text-blue-400">
+                                Visit us
+                            </p>
+                            <a
+                                href="https://www.google.com/maps/search/?api=1&query=No.+103+Gloria+St.+Corner+Ortigas+Ext.,+Marick+Subd.,+Cainta,+Rizal+Philippines+1900"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="mt-2 block text-lg font-semibold text-slate-900 hover:text-blue-600"
+                            >
+                                No. 103 Gloria St. Corner Ortigas Ext., Marick Subd., Cainta, Rizal 1900
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mt-6 grid gap-6 lg:grid-cols-2">
+                        <div v-for="group in contactGroups" :key="group.title" class="space-y-3">
+                            <div class="flex items-center gap-2 text-sm font-semibold text-slate-500">
+                                <component :is="group.icon" :size="18" class="text-blue-500" />
+                                {{ group.title }}
+                            </div>
+                            <div class="space-y-2">
+                                <a
+                                    v-for="entry in group.entries"
+                                    :key="entry.label"
+                                    :href="entry.href"
+                                    class="flex items-center justify-between rounded-2xl border border-slate-100 px-4 py-3 text-sm font-semibold text-slate-800 transition hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50"
+                                >
+                                    {{ entry.label }}
+                                    <Smartphone :size="16" class="text-blue-500" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 grid gap-4 border-t border-slate-100 pt-6 text-sm text-slate-700 lg:grid-cols-2">
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-2 text-slate-500">
+                                <Mail :size="18" class="text-blue-500" />
+                                Email
+                            </div>
+                            <a
+                                href="mailto:president@azitsoroginc.com"
+                                class="font-semibold text-slate-900 hover:text-blue-600"
+                            >
+                                president@azitsoroginc.com
+                            </a>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-2 text-slate-500">
+                                <Facebook :size="18" class="text-blue-500" />
+                                Facebook
+                            </div>
+                            <a
+                                target="_blank"
+                                href="https://www.facebook.com/p/azitsorog-incorporated-100063541945604/"
+                                class="font-semibold text-slate-900 hover:text-blue-600"
+                            >
+                                Azitsorog Inc. Official
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div
-                class="flex flex-col lg:flex-row justify-center w-full space-y-5 lg:space-y-0 lg:space-x-2"
-            >
-                <div class="flex flex-col w-full h-fit rounded-md shadow p-4">
-                    <div class="flex items-center text-lg mb-2 text-blue-600">
-                        <MessageCircle class="mr-1" :size="20" />
-                        <span>Call or Message us:</span>
+
+            <div class="flex-1 rounded-[32px] border border-blue-100 bg-white p-8 shadow-2xl">
+                <p class="text-xs font-semibold uppercase tracking-[0.4em] text-blue-400">
+                    Send us a note
+                </p>
+                <h2 class="mt-4 text-2xl font-bold text-slate-900">
+                    We’ll align the right engineer and timeline.
+                </h2>
+                <p class="mt-3 text-sm text-slate-500">
+                    Drop your details and we’ll respond within one business day.
+                </p>
+                <form class="mt-8 space-y-4">
+                    <div>
+                        <label class="text-xs uppercase tracking-[0.3em] text-slate-400">Full name</label>
+                        <input
+                            v-model="message.name"
+                            type="text"
+                            class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none"
+                            placeholder="Jane Dela Cruz"
+                        />
                     </div>
-                    <a
-                        href="tel:+639199917747"
-                        class="flex justify-between items-center hover:bg-blue-500 hover:text-white p-2 rounded"
-                    >
-                        <h6 class="text-xl">+63 919 9917 747</h6>
-                        <Smartphone :size="20" />
-                    </a>
-
-                    <a
-                        href="tel:+639176763907"
-                        class="flex justify-between items-center hover:bg-blue-500 hover:text-white p-2 rounded"
-                    >
-                        <h6 class="text-xl">+63 917 676 3907</h6>
-                        <Smartphone :size="20" />
-                    </a>
-                    <a
-                        href="tel:+63289351542"
-                        class="flex justify-between items-center hover:bg-blue-500 hover:text-white p-2 rounded"
-                    >
-                        <h6 class="text-xl">+632 89351542</h6>
-                        <Phone :size="20" />
-                    </a>
-
-                    <a
-                        href="tel:+63289387214"
-                        class="flex justify-between items-center hover:bg-blue-500 hover:text-white p-2 rounded"
-                    >
-                        <h6 class="text-xl">+632 89387214</h6>
-                        <Phone :size="20" />
-                    </a>
-
-                    <a
-                        href="tel:+63289902306"
-                        class="flex justify-between items-center hover:bg-blue-500 hover:text-white p-2 rounded"
-                    >
-                        <h6 class="text-xl">+632 89902306</h6>
-                        <Phone :size="20" />
-                    </a>
-
-                    <a
-                        href="tel:+63286565899"
-                        class="flex justify-between items-center hover:bg-blue-500 hover:text-white p-2 rounded"
-                    >
-                        <h6 class="text-xl">+632 86565899</h6>
-                        <Phone :size="20" />
-                    </a>
-
-                    <a
-                        href="tel:+63284044187"
-                        class="flex justify-between items-center hover:bg-blue-500 hover:text-white p-2 rounded"
-                    >
-                        <h6 class="text-xl">+632 84044187</h6>
-                        <Phone :size="20" />
-                    </a>
-
-                    <a
-                        href="tel:+63284044834"
-                        class="flex justify-between items-center hover:bg-blue-500 hover:text-white p-2 rounded"
-                    >
-                        <h6 class="text-xl">+632 84044834</h6>
-                        <Phone :size="20" />
-                    </a>
-
-                    <a
-                        href="tel:+63286568605"
-                        class="flex justify-between items-center hover:bg-blue-500 hover:text-white p-2 rounded"
-                    >
-                        <h6 class="text-xl">+632 86568605</h6>
-                        <Phone :size="20" />
-                    </a>
-                </div>
-                <div class="flex flex-col w-full h-fit rounded-md shadow p-4 space-y-2">
-                    <div class="flex flex-col h-fit p-4">
-                        <div class="flex items-center text-lg text-blue-600">
-                            <Mail class="mr-1" :size="20" /> <span>Email us:</span>
-                        </div>
-                        <a
-                            href="mailto:president@azitsoroginc.com"
-                            class="font-semibold text-xl mt-2 hover:text-blue-600"
-                        >
-                            president@azitsoroginc.com
-                        </a>
+                    <div>
+                        <label class="text-xs uppercase tracking-[0.3em] text-slate-400">Work email</label>
+                        <input
+                            v-model="message.email"
+                            type="email"
+                            class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none"
+                            placeholder="you@company.com"
+                        />
                     </div>
-                    <hr />
-                    <div class="flex flex-col h-fit p-4">
-                        <div class="flex items-center text-lg text-blue-600">
-                            <Facebook class="mr-1" :size="20" />
-                            <span>Message us:</span>
-                        </div>
-                        <a
-                            target="_blank"
-                            href="https://www.facebook.com/p/azitsorog-incorporated-100063541945604/"
-                            class="font-semibold text-xl mt-2 hover:text-blue-600"
-                        >
-                            Azitsorog Inc. Official Facebook Page</a
-                        >
+                    <div>
+                        <label class="text-xs uppercase tracking-[0.3em] text-slate-400">Company / agency</label>
+                        <input
+                            v-model="message.company"
+                            type="text"
+                            class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none"
+                            placeholder="Organization name"
+                        />
                     </div>
-                    <hr />
-                    <div class="flex flex-col h-fit p-4">
-                        <div class="flex items-center text-lg text-blue-600">
-                            <HandHeart class="mr-1" :size="20" />
-                            <span>Technical & Sales Support:</span>
-                        </div>
-                        <a
-                            href="tel:+639175162251"
-                            class="flex justify-between font-semibold items-center hover:bg-blue-500 mt-2 hover:text-white p-2 rounded"
-                        >
-                            <h6 class="text-xl">
-                                <span class="font-normal">Luzon:</span> +63 917 516 2251
-                            </h6>
-                            <Smartphone :size="20" />
-                        </a>
-                        <a
-                            href="tel:+639178060854"
-                            class="flex justify-between font-semibold items-center hover:bg-blue-500 hover:text-white p-2 rounded"
-                        >
-                            <h6 class="text-xl">
-                                <span class="font-normal">Visayas:</span> +63 917 806 0854
-                            </h6>
-                            <Smartphone :size="20" />
-                        </a>
-
-                        <a
-                            href="tel:+639998390945"
-                            class="flex justify-between font-semibold items-center hover:bg-blue-500 hover:text-white p-2 rounded"
-                        >
-                            <h6 class="text-xl">
-                                <span class="font-normal">Mindanao:</span> +63 999 839 0945
-                            </h6>
-                            <Smartphone :size="20" />
-                        </a>
-                        <a
-                            href="tel:0822246928"
-                            class="flex justify-between font-semibold items-center hover:bg-blue-500 hover:text-white p-2 rounded"
-                        >
-                            <h6 class="text-xl">
-                                <span class="font-normal">Mindanao:</span> 082 224 6928
-                            </h6>
-                            <Phone :size="20" />
-                        </a>
+                    <div>
+                        <label class="text-xs uppercase tracking-[0.3em] text-slate-400">Project notes</label>
+                        <textarea
+                            v-model="message.notes"
+                            rows="4"
+                            class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none"
+                            placeholder="Tell us about the deployment, timeline, or requirements."
+                        ></textarea>
                     </div>
+                    <button
+                        type="button"
+                        class="flex w-full items-center justify-center gap-2 rounded-full bg-blue-500 px-4 py-3 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-blue-600"
+                    >
+                        <MessageCircle :size="18" />
+                        Submit request
+                    </button>
+                    <p class="text-xs text-slate-400">
+                        By submitting, you agree to be contacted about Matica products distributed by
+                        Azitsorog.
+                    </p>
+                </form>
+                <div class="mt-6 rounded-2xl border border-blue-100 bg-blue-50/50 p-4 text-sm text-blue-800">
+                    Prefer a call? <RouterLink to="/" class="font-semibold underline">Dial our 24/7 lines</RouterLink>.
                 </div>
             </div>
         </div>
