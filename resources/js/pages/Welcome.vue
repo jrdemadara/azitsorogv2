@@ -34,10 +34,6 @@ const solutionPillars = [
         title: "Custom Applications",
         body: "Tailored dashboards, enrollment portals, and workflow automations that wrap around Matica hardware to fit local policies.",
     },
-    {
-        title: "Entrance Turnstiles",
-        body: "Design, supply, and maintain secure turnstile systems for schools, government facilities, and private campuses that require credential-aware access.",
-    },
 ];
 
 const stats = [
@@ -192,7 +188,7 @@ const products = [
                             all-in-one platform.
                         </p>
                     </div>
-                    <div class="grid gap-6 md:grid-cols-2">
+                    <div class="grid gap-6 md:grid-cols-3">
                         <article
                             v-for="pillar in solutionPillars"
                             :key="pillar.title"
@@ -286,7 +282,7 @@ const products = [
                         <h2
                             class="mt-4 text-3xl font-bold sm:text-4xl text-slate-900 dark:text-white"
                         >
-                            Product showcase inspired by Matica Secure ID
+                            Product showcase by Matica Secure ID
                         </h2>
 
                         <p class="mt-4 text-lg text-slate-600 dark:text-slate-200">
