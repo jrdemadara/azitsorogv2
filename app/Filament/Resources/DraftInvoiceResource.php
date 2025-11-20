@@ -167,6 +167,10 @@ class DraftInvoiceResource extends Resource
                             ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'])
                             ->disk('local')
                             ->directory('invoices/soft-copies')
+                            ->downloadable()
+                            ->previewable()
+                            ->openable()
+                            ->deletable()
                             ->maxSize(10240)
                             ->helperText('Drag and drop files here or click to browse. Multiple files allowed. PDF and images only (max 10MB per file).')
                             ->columnSpanFull(),
