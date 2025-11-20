@@ -11,6 +11,7 @@ class SecureFileController extends Controller
         $allowedTypes = [
             'invoice'      => 'private/invoices',
             'deposit-slip' => 'private/deposit-slip',
+            'soft-copy'    => 'private/invoices/soft-copies',
         ];
 
         // Validate if the type exists

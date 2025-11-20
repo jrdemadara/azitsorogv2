@@ -10,9 +10,12 @@ import {
     LandPlot,
     Landmark,
     Phone,
+    Printer,
+    Radio,
+    Shield,
     ShieldHalf,
+    ShoppingBag,
 } from "lucide-vue-next";
-import productPlaceholder from "../../images/printer2.png";
 import digitalIdentityVisual from "../../images/background.jpg";
 
 const heroHighlights = [
@@ -23,16 +26,24 @@ const heroHighlights = [
 
 const solutionPillars = [
     {
-        title: "Matica Distribution",
-        body: "Official channel for Matica printers, engravers, consumables, and lifecycle add-ons—sourced, staged, and delivered by Azitsorog.",
+        title: "Digital Identification Card Printing Systems",
+        body: "State-of-the-art ID card printing solutions including Matica printers and engravers for secure, high-quality credential issuance.",
+        icon: Printer,
     },
     {
-        title: "Implementation & Support",
-        body: "Certified deployment, training, and 24/7 support desks that keep issuance, engraving, and personalization pipelines running.",
+        title: "RFID Access Control",
+        body: "Comprehensive RFID access control systems for secure entry management across schools, facilities, and government buildings.",
+        icon: Radio,
     },
     {
-        title: "Custom Applications",
-        body: "Tailored dashboards, enrollment portals, and workflow automations that wrap around Matica hardware to fit local policies.",
+        title: "Security Surveillance",
+        body: "Advanced security surveillance systems to protect your premises with cutting-edge monitoring and recording technology.",
+        icon: Shield,
+    },
+    {
+        title: "Premium ID Accessories",
+        body: "High-quality ID accessories including Full Color Logo Pin ID Holder Necklaces, Heavy-Duty Protectors, and Retractable ID Holders.",
+        icon: ShoppingBag,
     },
 ];
 
@@ -123,7 +134,7 @@ const products = [
 </script>
 
 <template>
-    <div class="flex flex-col bg-white">
+    <div class="flex flex-col bg-white dark:bg-slate-900">
         <main class="flex-grow">
             <section
                 class="relative w-full overflow-hidden text-white"
@@ -174,31 +185,36 @@ const products = [
                 </div>
             </section>
 
-            <section class="bg-white px-6 py-16 lg:px-20">
+            <section class="bg-white dark:bg-slate-900 px-6 py-16 lg:px-20">
                 <div class="mx-auto max-w-6xl">
                     <div class="mb-10 flex flex-col gap-4 text-center">
-                        <p class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-500">
+                        <p class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-500 dark:text-blue-400">
                             Solutions
                         </p>
-                        <h2 class="text-3xl font-bold text-slate-900 sm:text-4xl">
+                        <h2 class="text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">
                             What we deliver to every identity journey
                         </h2>
-                        <p class="text-lg text-slate-500">
-                            Modeled after the Matica Group structure—refined for Azitsorog’s
+                        <p class="text-lg text-slate-500 dark:text-slate-400">
+                            Modeled after the Matica Group structure—refined for Azitsorog's
                             all-in-one platform.
                         </p>
                     </div>
-                    <div class="grid gap-6 md:grid-cols-3">
+                    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
                         <article
                             v-for="pillar in solutionPillars"
                             :key="pillar.title"
-                            class="rounded-2xl border border-slate-100 p-8 shadow-sm transition hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg"
+                            class="rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-800 p-8 shadow-sm transition hover:-translate-y-1 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-lg"
                         >
-                            <h3 class="text-xl font-semibold text-slate-900">{{ pillar.title }}</h3>
-                            <p class="mt-4 text-slate-600">
+                            <component
+                                :is="pillar.icon"
+                                class="mb-4 text-blue-500 dark:text-blue-400"
+                                :size="32"
+                            />
+                            <h3 class="text-xl font-semibold text-slate-900 dark:text-white">{{ pillar.title }}</h3>
+                            <p class="mt-4 text-slate-600 dark:text-slate-300">
                                 {{ pillar.body }}
                             </p>
-                            <div class="mt-6 flex items-center text-blue-600">
+                            <div class="mt-6 flex items-center text-blue-600 dark:text-blue-400">
                                 <CircleArrowRight class="mr-2" :size="18" />
                                 Learn more
                             </div>
@@ -207,36 +223,36 @@ const products = [
                 </div>
             </section>
 
-            <section class="bg-white px-6 py-16 lg:px-20">
+            <section class="bg-slate-50 dark:bg-slate-800/50 px-6 py-16 lg:px-20">
                 <div class="mx-auto flex max-w-6xl flex-col gap-12 lg:flex-row">
                     <div class="flex-1">
-                        <p class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-500">
+                        <p class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-500 dark:text-blue-400">
                             Markets we secure
                         </p>
-                        <h2 class="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">
+                        <h2 class="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">
                             Convergent solutions for every sector
                         </h2>
-                        <p class="mt-4 text-lg text-slate-600">
+                        <p class="mt-4 text-lg text-slate-600 dark:text-slate-300">
                             From high-volume issuance bureaus to distributed enrollment sites, the
-                            Azitsorog platform mirrors Matica’s ability to converge physical and
+                            Azitsorog platform mirrors Matica's ability to converge physical and
                             digital worlds without compromising trust.
                         </p>
                         <div class="mt-8 grid gap-6">
                             <div
                                 v-for="market in markets"
                                 :key="market.title"
-                                class="rounded-2xl border border-slate-100 p-6 shadow-sm transition hover:border-blue-200"
+                                class="rounded-2xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-6 shadow-sm transition hover:border-blue-200 dark:hover:border-blue-600"
                             >
-                                <h3 class="text-xl font-semibold text-slate-900">
+                                <h3 class="text-xl font-semibold text-slate-900 dark:text-white">
                                     {{ market.title }}
                                 </h3>
-                                <p class="mt-3 text-slate-600">
+                                <p class="mt-3 text-slate-600 dark:text-slate-300">
                                     {{ market.copy }}
                                 </p>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-1 rounded-3xl bg-slate-950 p-10 text-white shadow-2xl">
+                    <div class="flex-1 rounded-3xl bg-slate-950 dark:bg-slate-900 p-10 text-white shadow-2xl">
                         <p class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-200">
                             Convergent blueprint
                         </p>
@@ -358,22 +374,22 @@ const products = [
                 </div>
             </section>
 
-            <section class="bg-blue-600 px-6 py-16 text-white lg:px-20">
+            <section class="bg-blue-600 dark:bg-blue-800 px-6 py-16 text-white lg:px-20">
                 <div class="mx-auto flex max-w-6xl flex-col gap-10 lg:flex-row lg:items-center">
                     <div class="flex-1 space-y-6">
-                        <p class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-200">
+                        <p class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-200 dark:text-blue-100">
                             Ready for next steps
                         </p>
                         <h2 class="text-3xl font-bold sm:text-4xl">
-                            Let’s issue, protect, and elevate every credential.
+                            Let's issue, protect, and elevate every credential.
                         </h2>
-                        <p class="text-lg text-blue-100">
-                            Whether you’re modernizing ID printers, embedding fintech-grade cards,
+                        <p class="text-lg text-blue-100 dark:text-blue-50">
+                            Whether you're modernizing ID printers, embedding fintech-grade cards,
                             or unifying enterprise access, our team carries the same trust-first DNA
                             showcased by Matica Group.
                         </p>
                     </div>
-                    <div class="flex-1 rounded-3xl bg-white/10 p-8 backdrop-blur">
+                    <div class="flex-1 rounded-3xl bg-white/10 dark:bg-white/5 p-8 backdrop-blur">
                         <div class="grid gap-6 md:grid-cols-2">
                             <div class="rounded-2xl bg-white/10 p-6">
                                 <Handshake class="text-blue-100" :size="40" />

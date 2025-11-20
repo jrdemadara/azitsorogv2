@@ -5,8 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SalesInvoice extends Model
 {
+
     protected $connection = 'pgsql_main';
-    //protected $table      = 'sales_invoices';
     protected $fillable = [
         'si_number',
         'invoice',

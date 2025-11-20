@@ -26,6 +26,8 @@ class InvoiceItemsResource extends Resource
     }
 
     protected static ?int $navigationSort = 2;
+    
+    protected static ?string $navigationLabel = 'Invoice Items';
 
     public static function form(Form $form): Form
     {

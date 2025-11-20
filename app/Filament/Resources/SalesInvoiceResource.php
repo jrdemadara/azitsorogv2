@@ -17,13 +17,13 @@ use Illuminate\Support\Facades\URL;
 class SalesInvoiceResource extends Resource
 {
     protected static ?string $model           = SalesInvoice::class;
-    protected static ?string $navigationLabel = 'Soft Copies';
+    protected static ?string $navigationLabel = 'Sales Invoices';
     protected static ?string $navigationIcon  = 'heroicon-o-document-duplicate';
     protected static ?int $navigationSort     = 3;
-
-    public static function getNavigationGroup(): ?string
+    
+    public static function shouldRegisterNavigation(): bool
     {
-        return 'Invoice';
+        return false; // Hide from navigation as soft copies are now integrated into Invoice resource
     }
 
     public static function form(Form $form): Form
