@@ -17,27 +17,32 @@ const milestones = [
     {
         year: "1993",
         title: "Foundation",
-        description: "AZITSOROG Trading launched with a mission to design and manufacture trend-setting products.",
+        description:
+            "AZITSOROG Trading launched with a mission to design and manufacture trend-setting products.",
     },
     {
         year: "1995",
         title: "World Youth Day",
-        description: "Exclusive license from Catholic Bishop Conference to produce and distribute the 10th World Youth Day Unity Band worldwide.",
+        description:
+            "Exclusive license from Catholic Bishop Conference to produce and distribute the 10th World Youth Day Unity Band worldwide.",
     },
     {
         year: "1998",
         title: "Centennial Celebration",
-        description: "National Centennial Commission exclusive license for Philippine Independence Centennial commemorative products.",
+        description:
+            "National Centennial Commission exclusive license for Philippine Independence Centennial commemorative products.",
     },
     {
         year: "2000",
         title: "Jubilee Year",
-        description: "Licensed to manufacture diverse Jubilee Commemorative Products—wristbands, notebooks, clocks, and signature ID Holder Necklaces.",
+        description:
+            "Licensed to manufacture diverse Jubilee Commemorative Products—wristbands, notebooks, clocks, and signature ID Holder Necklaces.",
     },
     {
         year: "2002",
         title: "Incorporation",
-        description: "Officially incorporated as Azitsorog Incorporated, expanding into Digital ID Printing Systems, RFID Access Control, and Security Surveillance.",
+        description:
+            "Officially incorporated as Azitsorog Incorporated, expanding into Digital ID Printing Systems, RFID Access Control, and Security Surveillance.",
     },
 ];
 
@@ -45,7 +50,8 @@ const values = [
     {
         icon: Target,
         title: "Innovation First",
-        description: "Pioneering solutions that set industry standards and drive technological advancement.",
+        description:
+            "Pioneering solutions that set industry standards and drive technological advancement.",
     },
     {
         icon: Shield,
@@ -55,7 +61,8 @@ const values = [
     {
         icon: Users,
         title: "Customer-Centric",
-        description: "Sustaining customer trust through exceptional service and competitive pricing.",
+        description:
+            "Sustaining customer trust through exceptional service and competitive pricing.",
     },
     {
         icon: TrendingUp,
@@ -81,19 +88,27 @@ const capabilities = [
     <div class="flex flex-col bg-white dark:bg-slate-900">
         <main class="flex-grow">
             <!-- Hero Section -->
-            <section 
+            <section
                 class="relative w-full overflow-hidden text-white bg-cover bg-no-repeat"
-                :style="{ backgroundImage: `url(${digitalIdentityVisual})`}"
+                :style="{ backgroundImage: `url(${digitalIdentityVisual})` }"
             >
                 <div class="absolute inset-0 bg-slate-950/80"></div>
-                <div class="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-900/70 to-transparent"></div>
-                <div class="relative mx-auto flex max-w-6xl flex-col items-center gap-8 px-6 py-24 text-center lg:px-20">
+                <div
+                    class="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-900/70 to-transparent"
+                ></div>
+                <div
+                    class="relative mx-auto flex max-w-6xl flex-col items-center gap-8 px-6 py-24 text-center lg:px-20"
+                >
                     <div class="rounded-3xl bg-white/10 p-6 backdrop-blur">
-                        <img alt="Azitsorog logo" class="mx-auto h-24 w-auto" src="../../images/logo.png" />
+                        <img
+                            alt="Azitsorog logo"
+                            class="mx-auto h-24 w-auto"
+                            src="../../images/logo.png"
+                        />
                     </div>
                     <div class="space-y-4">
                         <p class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-300">
-                            About Azitsorog
+                            About Azitsorog Inc.
                         </p>
                         <h1 class="text-4xl font-black leading-tight sm:text-5xl lg:text-6xl">
                             Pioneering identity solutions
@@ -102,9 +117,9 @@ const capabilities = [
                             </span>
                         </h1>
                         <p class="mx-auto max-w-2xl text-lg text-slate-200">
-                            Azitsorog Incorporated stands at the forefront of Digital Identification Card Printing
-                            Systems, RFID Access Control, Security Surveillance, and premium ID accessories
-                            manufacturing in the Philippines.
+                            Azitsorog Incorporated stands at the forefront of Digital Identification
+                            Card Printing Systems, RFID Access Control, Security Surveillance, and
+                            premium ID accessories manufacturing in the Philippines.
                         </p>
                     </div>
                 </div>
@@ -114,16 +129,19 @@ const capabilities = [
             <section class="bg-white dark:bg-slate-900 px-6 py-16 lg:px-20">
                 <div class="mx-auto max-w-6xl">
                     <div class="mb-12 flex flex-col gap-4 text-center">
-                        <p class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-500 dark:text-blue-400">
+                        <p
+                            class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-500 dark:text-blue-400"
+                        >
                             Our Story
                         </p>
                         <h2 class="text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">
                             Innovation from day one
                         </h2>
                         <p class="mx-auto max-w-3xl text-lg text-slate-600 dark:text-slate-300">
-                            As the original creator of the Full Color Logo Pin ID Holder Necklace, Azitsorog has
-                            carved its name as a global first-mover in ID accessory innovation. From day one,
-                            innovation wasn't just a value—it was the blueprint.
+                            As the original creator of the Full Color Logo Pin ID Holder Necklace,
+                            Azitsorog has carved its name as a global first-mover in ID accessory
+                            innovation. From day one, innovation wasn't just a value—it was the
+                            blueprint.
                         </p>
                     </div>
                 </div>
@@ -133,7 +151,9 @@ const capabilities = [
             <section class="bg-slate-50 dark:bg-slate-800/50 px-6 py-16 lg:px-20">
                 <div class="mx-auto max-w-6xl">
                     <div class="mb-12 flex flex-col gap-4 text-center">
-                        <p class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-500 dark:text-blue-400">
+                        <p
+                            class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-500 dark:text-blue-400"
+                        >
                             Our Journey
                         </p>
                         <h2 class="text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">
@@ -153,8 +173,12 @@ const capabilities = [
                                     {{ milestone.year }}
                                 </div>
                             </div>
-                            <div class="flex-1 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-6 shadow-sm">
-                                <h3 class="mb-2 text-xl font-semibold text-slate-900 dark:text-white">
+                            <div
+                                class="flex-1 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-6 shadow-sm"
+                            >
+                                <h3
+                                    class="mb-2 text-xl font-semibold text-slate-900 dark:text-white"
+                                >
                                     {{ milestone.title }}
                                 </h3>
                                 <p class="text-slate-600 dark:text-slate-300">
@@ -170,16 +194,19 @@ const capabilities = [
             <section class="bg-white dark:bg-slate-900 px-6 py-16 lg:px-20">
                 <div class="mx-auto max-w-6xl">
                     <div class="mb-12 flex flex-col gap-4 text-center">
-                        <p class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-500 dark:text-blue-400">
+                        <p
+                            class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-500 dark:text-blue-400"
+                        >
                             Our Philosophy
                         </p>
                         <h2 class="text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">
                             What drives us forward
                         </h2>
                         <p class="mx-auto max-w-3xl text-lg text-slate-600 dark:text-slate-300">
-                            Azitsorog Incorporated is driven by a commitment to excellence. Our mission is to
-                            distribute state-of-the-art identification and security technologies while delivering
-                            premium-grade accessories at fair and competitive prices.
+                            Azitsorog Incorporated is driven by a commitment to excellence. Our
+                            mission is to distribute state-of-the-art identification and security
+                            technologies while delivering premium-grade accessories at fair and
+                            competitive prices.
                         </p>
                     </div>
                     <div class="grid gap-6 md:grid-cols-2">
@@ -215,8 +242,9 @@ const capabilities = [
                             Comprehensive identity solutions
                         </h2>
                         <p class="mx-auto max-w-3xl text-lg text-slate-200">
-                            From digital printing systems to access control and premium accessories—Azitsorog
-                            provides end-to-end solutions for organizations across the Philippines.
+                            From digital printing systems to access control and premium
+                            accessories—Azitsorog provides end-to-end solutions for organizations
+                            across the Philippines.
                         </p>
                     </div>
                     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -240,8 +268,8 @@ const capabilities = [
                             Ready to transform your identity management?
                         </h2>
                         <p class="mx-auto max-w-2xl text-lg text-blue-100 dark:text-blue-50">
-                            As the only authorized Matica distributor in the Philippines, we're here to help you
-                            implement secure, scalable solutions tailored to your needs.
+                            As the only authorized Matica distributor in the Philippines, we're here
+                            to help you implement secure, scalable solutions tailored to your needs.
                         </p>
                     </div>
                     <div class="flex flex-col gap-4 sm:flex-row">

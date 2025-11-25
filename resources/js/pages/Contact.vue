@@ -105,8 +105,10 @@ const handleSubmit = async () => {
             <!-- Contact Azitsorog Section -->
             <div class="space-y-8">
                 <div class="space-y-3">
-                    <p class="text-xs font-semibold uppercase tracking-[0.4em] text-blue-400 dark:text-blue-300">
-                        Contact Azitsorog
+                    <p
+                        class="text-xs font-semibold uppercase tracking-[0.4em] text-blue-400 dark:text-blue-300"
+                    >
+                        Contact Azitsorog Inc.
                     </p>
                     <h1 class="text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">
                         Talk to a Matica-certified partner
@@ -116,11 +118,15 @@ const handleSubmit = async () => {
                         the right regional engineers.
                     </p>
                 </div>
-                <div class="rounded-3xl border border-white dark:border-slate-800 bg-white dark:bg-slate-800 p-6 shadow-lg">
-                    <div class="flex items-center items-start gap-3 text-slate-700 dark:text-slate-300">
+                <div
+                    class="rounded-3xl border border-white dark:border-slate-800 bg-white dark:bg-slate-800 p-6 shadow-lg"
+                >
+                    <div class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
                         <MapPinHouse class="text-blue-500 dark:text-blue-400" :size="24" />
                         <div>
-                            <p class="text-xs font-semibold uppercase tracking-[0.4em] text-blue-400 dark:text-blue-300">
+                            <p
+                                class="text-xs font-semibold uppercase tracking-[0.4em] text-blue-400 dark:text-blue-300"
+                            >
                                 Visit us
                             </p>
                             <a
@@ -129,14 +135,21 @@ const handleSubmit = async () => {
                                 rel="noopener noreferrer"
                                 class="block text-lg font-semibold text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400"
                             >
-                                No. 103 Gloria St. Corner Ortigas Ext., Marick Subd., Cainta, Rizal 1900
+                                No. 103 Gloria St. Corner Ortigas Ext., Marick Subd., Cainta, Rizal
+                                1900
                             </a>
                         </div>
                     </div>
                     <div class="mt-6 grid gap-6 lg:grid-cols-2">
                         <div v-for="group in contactGroups" :key="group.title" class="space-y-3">
-                            <div class="flex items-center gap-2 text-sm font-semibold text-slate-500 dark:text-slate-400">
-                                <component :is="group.icon" :size="18" class="text-blue-500 dark:text-blue-400" />
+                            <div
+                                class="flex items-center gap-2 text-sm font-semibold text-slate-500 dark:text-slate-400"
+                            >
+                                <component
+                                    :is="group.icon"
+                                    :size="18"
+                                    class="text-blue-500 dark:text-blue-400"
+                                />
                                 {{ group.title }}
                             </div>
                             <div class="space-y-2">
@@ -147,12 +160,17 @@ const handleSubmit = async () => {
                                     class="flex items-center justify-between rounded-2xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-700 px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:-translate-y-0.5 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-slate-600"
                                 >
                                     {{ entry.label }}
-                                    <Smartphone :size="16" class="text-blue-500 dark:text-blue-400" />
+                                    <Smartphone
+                                        :size="16"
+                                        class="text-blue-500 dark:text-blue-400"
+                                    />
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div class="mt-6 grid gap-4 border-t border-slate-100 dark:border-slate-700 pt-6 text-sm text-slate-700 dark:text-slate-300 lg:grid-cols-2">
+                    <div
+                        class="mt-6 grid gap-4 border-t border-slate-100 dark:border-slate-700 pt-6 text-sm text-slate-700 dark:text-slate-300 lg:grid-cols-2"
+                    >
                         <div class="space-y-2">
                             <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
                                 <Mail :size="18" class="text-blue-500 dark:text-blue-400" />
@@ -183,8 +201,12 @@ const handleSubmit = async () => {
             </div>
 
             <!-- Send us a note Section -->
-            <div class="rounded-[32px] border border-blue-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-8 shadow-2xl">
-                <p class="text-xs font-semibold uppercase tracking-[0.4em] text-blue-400 dark:text-blue-300">
+            <div
+                class="rounded-[32px] border border-blue-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-8 shadow-2xl"
+            >
+                <p
+                    class="text-xs font-semibold uppercase tracking-[0.4em] text-blue-400 dark:text-blue-300"
+                >
                     Send us a note
                 </p>
                 <h2 class="mt-4 text-2xl font-bold text-slate-900 dark:text-white">
@@ -194,43 +216,65 @@ const handleSubmit = async () => {
                     Drop your details and we'll respond within one business day.
                 </p>
                 <form @submit.prevent="handleSubmit" class="mt-8 space-y-4">
-                    <div v-if="submitStatus.type" class="rounded-2xl p-4 text-sm" :class="submitStatus.type === 'success' ? 'bg-green-50 dark:bg-green-900/30 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-800' : 'bg-red-50 dark:bg-red-900/30 text-red-800 dark:text-red-200 border border-red-200 dark:border-red-800'">
+                    <div
+                        v-if="submitStatus.type"
+                        class="rounded-2xl p-4 text-sm"
+                        :class="
+                            submitStatus.type === 'success'
+                                ? 'bg-green-50 dark:bg-green-900/30 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-800'
+                                : 'bg-red-50 dark:bg-red-900/30 text-red-800 dark:text-red-200 border border-red-200 dark:border-red-800'
+                        "
+                    >
                         {{ submitStatus.message }}
                     </div>
                     <div class="grid gap-6 md:grid-cols-3">
                         <div>
-                        <label class="text-xs uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">Full name <span class="text-red-500 dark:text-red-400">*</span></label>
-                        <input
-                            v-model="message.name"
-                            type="text"
-                            required
-                            class="mt-2 w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-700 px-4 py-3 text-sm text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-blue-400 dark:focus:border-blue-500 focus:outline-none"
-                            placeholder="Jane Dela Cruz"
-                        />
+                            <label
+                                class="text-xs uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500"
+                                >Full name
+                                <span class="text-red-500 dark:text-red-400">*</span></label
+                            >
+                            <input
+                                v-model="message.name"
+                                type="text"
+                                required
+                                class="mt-2 w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-700 px-4 py-3 text-sm text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-blue-400 dark:focus:border-blue-500 focus:outline-none"
+                                placeholder="Jane Dela Cruz"
+                            />
+                        </div>
+                        <div>
+                            <label
+                                class="text-xs uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500"
+                                >Work email
+                                <span class="text-red-500 dark:text-red-400">*</span></label
+                            >
+                            <input
+                                v-model="message.email"
+                                type="email"
+                                required
+                                class="mt-2 w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-700 px-4 py-3 text-sm text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-blue-400 dark:focus:border-blue-500 focus:outline-none"
+                                placeholder="you@company.com"
+                            />
+                        </div>
+                        <div>
+                            <label
+                                class="text-xs uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500"
+                                >Company / agency</label
+                            >
+                            <input
+                                v-model="message.company"
+                                type="text"
+                                class="mt-2 w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-700 px-4 py-3 text-sm text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-blue-400 dark:focus:border-blue-500 focus:outline-none"
+                                placeholder="Organization name"
+                            />
+                        </div>
                     </div>
                     <div>
-                        <label class="text-xs uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">Work email <span class="text-red-500 dark:text-red-400">*</span></label>
-                        <input
-                            v-model="message.email"
-                            type="email"
-                            required
-                            class="mt-2 w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-700 px-4 py-3 text-sm text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-blue-400 dark:focus:border-blue-500 focus:outline-none"
-                            placeholder="you@company.com"
-                        />
-                    </div>
-                    <div>
-                        <label class="text-xs uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">Company / agency</label>
-                        <input
-                            v-model="message.company"
-                            type="text"
-                            class="mt-2 w-full rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-700 px-4 py-3 text-sm text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-blue-400 dark:focus:border-blue-500 focus:outline-none"
-                            placeholder="Organization name"
-                        />
-                    </div>
-
-                    </div>
-                    <div>
-                        <label class="text-xs uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">Project notes <span class="text-red-500 dark:text-red-400">*</span></label>
+                        <label
+                            class="text-xs uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500"
+                            >Project notes
+                            <span class="text-red-500 dark:text-red-400">*</span></label
+                        >
                         <textarea
                             v-model="message.notes"
                             required
@@ -248,12 +292,17 @@ const handleSubmit = async () => {
                         {{ isSubmitting ? "Sending..." : "Submit request" }}
                     </button>
                     <p class="text-xs text-slate-400 dark:text-slate-500">
-                        By submitting, you agree to be contacted about Matica products distributed by
-                        Azitsorog.
+                        By submitting, you agree to be contacted about Matica products distributed
+                        by Azitsorog.
                     </p>
                 </form>
-                <div class="mt-6 rounded-2xl border border-blue-100 dark:border-blue-900 bg-blue-50/50 dark:bg-blue-900/20 p-4 text-sm text-blue-800 dark:text-blue-200">
-                    Prefer a call? <RouterLink to="/" class="font-semibold underline">Dial our 24/7 lines</RouterLink>.
+                <div
+                    class="mt-6 rounded-2xl border border-blue-100 dark:border-blue-900 bg-blue-50/50 dark:bg-blue-900/20 p-4 text-sm text-blue-800 dark:text-blue-200"
+                >
+                    Prefer a call?
+                    <RouterLink to="/" class="font-semibold underline"
+                        >Dial our 24/7 lines</RouterLink
+                    >.
                 </div>
             </div>
         </div>

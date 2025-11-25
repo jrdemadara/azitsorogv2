@@ -63,10 +63,12 @@ onBeforeUnmount(() => {
             >
                 <div class="flex items-center gap-2">
                     <ShieldCheck :size="16" class="text-red-400" />
-                    <span>Authorized Matica distributor</span>
+                    <span>Matica Exclusive Distributor</span>
                 </div>
-                <div class="flex items-center gap-6">
-                    <span>Ortigas Ext, Cainta Rizal</span>
+                <div class="flex items-center gap-3">
+                    <span>+639176763907</span>
+                    <span>/</span>
+                    <span class="lowercase">president@azitsoroginc.com</span>
                 </div>
             </div>
         </div>
@@ -95,7 +97,29 @@ onBeforeUnmount(() => {
                             class="absolute -bottom-2 left-0 right-0 h-0.5 rounded-full bg-red-500"
                         ></span>
                     </RouterLink>
-                    <div class="relative" ref="dropdownRef">
+                    <div class="flex gap-3">
+                        <a
+                            href="https://www.maticagroup.com/downloads/"
+                            target="_blank"
+                            class="flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-slate-700 transition hover:border-red-400 hover:text-red-500"
+                        >
+                            <Printer :size="16" />
+                            Drivers
+                            <ArrowUpRight :size="18" />
+                        </a>
+
+                        <a
+                            href="https://www.maticagroup.com/downloads/"
+                            target="_blank"
+                            class="flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-slate-700 transition hover:border-red-400 hover:text-red-500"
+                        >
+                            <BookOpen :size="16" />
+                            Brochures
+                            <ArrowUpRight :size="18" />
+                        </a>
+                    </div>
+
+                    <!-- <div class="relative" ref="dropdownRef">
                         <button
                             data-dropdown-trigger
                             @click.stop="open = !open"
@@ -121,7 +145,7 @@ onBeforeUnmount(() => {
                                 <ArrowUpRight class="ml-auto" :size="16" />
                             </a>
                         </div>
-                    </div>
+                    </div> -->
                 </nav>
 
                 <div class="hidden items-center gap-3 lg:flex">

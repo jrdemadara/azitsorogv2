@@ -18,15 +18,19 @@
                     <ul class="mt-3 space-y-2 text-slate-300">
                         <li><RouterLink to="/" class="hover:text-white">Home</RouterLink></li>
                         <li><RouterLink to="/about" class="hover:text-white">About</RouterLink></li>
-                        <li><RouterLink to="/contact" class="hover:text-white">Contact</RouterLink></li>
+                        <li>
+                            <RouterLink to="/contact" class="hover:text-white">Contact</RouterLink>
+                        </li>
                     </ul>
                 </div>
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.4em] text-blue-300">Contact</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.4em] text-blue-300">
+                        Contact
+                    </p>
                     <ul class="mt-3 space-y-2 text-slate-300">
-                        <li>+63 (2) 8654 9712</li>
+                        <li>+639176763907</li>
                         <li>Ortigas Ext., Cainta, Rizal</li>
-                        <li>support@azitsorog.com</li>
+                        <li>president@azitsoroginc.com</li>
                     </ul>
                 </div>
             </div>

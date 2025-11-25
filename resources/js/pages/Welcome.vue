@@ -148,20 +148,20 @@ const products = [
                     class="relative mx-auto flex max-w-6xl flex-col gap-10 px-6 py-24 lg:flex-row lg:items-center lg:gap-16 lg:px-20"
                 >
                     <div class="flex w-full flex-col space-y-6">
-                        <p class="uppercase tracking-[0.4em] text-sm text-red-400">
+                        <!-- <p class="uppercase tracking-[0.4em] text-sm text-red-400">
                             Azitsorog Internal Suite
-                        </p>
+                        </p> -->
                         <h1 class="text-4xl font-black leading-tight sm:text-5xl lg:text-6xl">
                             Digital identity
                             <span class="block text-3xl font-semibold text-slate-200 sm:text-4xl">
                                 Converging physical and digital worlds
                             </span>
                         </h1>
-                        <p class="text-lg text-slate-200">
+                        <!-- <p class="text-lg text-slate-200">
                             Inspired by Matica Group’s hero presentation, we lead with a full-bleed
                             story that showcases Azitsorog as the partner for secure issuance,
                             engravers, and the applications that bind them together.
-                        </p>
+                        </p> -->
                         <ul class="space-y-3">
                             <li
                                 v-for="highlight in heroHighlights"
@@ -260,8 +260,8 @@ const products = [
                             </div>
                         </div>
                     </div>
-                    <div class="flex-1 rounded-3xl bg-slate-50 dark:bg-slate-900 p-10 shadow-2xl">
-                        <p class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-200">
+                    <div class="flex-1 rounded-3xl bg-slate-50 dark:bg-slate-900 p-10 shadow-xl">
+                        <p class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-300">
                             Convergent blueprint
                         </p>
                         <h3 class="mt-4 text-3xl font-bold">
@@ -300,7 +300,7 @@ const products = [
                         <p
                             class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-600 dark:text-blue-300"
                         >
-                            Matica hardware we distribute
+                            Products
                         </p>
                     </div>
 
