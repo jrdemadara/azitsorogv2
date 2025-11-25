@@ -58,16 +58,14 @@ onBeforeUnmount(() => {
 <template>
     <header class="sticky top-0 z-50 w-full backdrop-blur">
         <div class="hidden border-b border-white/20 bg-slate-950/95 text-white lg:block">
-            <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-2 text-[0.7rem] uppercase tracking-[0.4em]">
+            <div
+                class="mx-auto flex max-w-6xl items-center justify-between px-6 py-2 text-[0.7rem] uppercase tracking-[0.4em]"
+            >
                 <div class="flex items-center gap-2">
                     <ShieldCheck :size="16" class="text-red-400" />
                     <span>Authorized Matica distributor</span>
                 </div>
                 <div class="flex items-center gap-6">
-                    <a href="tel:+63286549712" class="flex items-center gap-2 hover:text-red-300">
-                        <PhoneCall :size="14" />
-                        +63 (2) 8654 9712
-                    </a>
                     <span>Ortigas Ext, Cainta Rizal</span>
                 </div>
             </div>
@@ -76,7 +74,11 @@ onBeforeUnmount(() => {
         <div class="border-b border-slate-200 bg-white/95 shadow-sm">
             <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 lg:px-6">
                 <RouterLink to="/" class="flex items-center gap-3">
-                    <img alt="Azitsorog logo" class="h-12 w-auto" src="../../images/logo-full.png" />
+                    <img
+                        alt="Azitsorog logo"
+                        class="h-12 w-auto"
+                        src="../../images/logo-full.png"
+                    />
                 </RouterLink>
 
                 <nav class="hidden items-center gap-6 text-sm font-semibold text-slate-600 lg:flex">

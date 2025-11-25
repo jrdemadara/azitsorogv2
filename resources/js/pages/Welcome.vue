@@ -126,7 +126,7 @@ const products = [
         type: "Direct-to-card printer",
         highlights: [
             "300 dpi premium edge-to-edge",
-            "180 color cards / hr",
+            "255 color cards / hr",
             "Modular lamination / laser upgrades",
         ],
     },
@@ -188,7 +188,9 @@ const products = [
             <section class="bg-white dark:bg-slate-900 px-6 py-16 lg:px-20">
                 <div class="mx-auto max-w-6xl">
                     <div class="mb-10 flex flex-col gap-4 text-center">
-                        <p class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-500 dark:text-blue-400">
+                        <p
+                            class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-500 dark:text-blue-400"
+                        >
                             Solutions
                         </p>
                         <h2 class="text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">
@@ -210,7 +212,9 @@ const products = [
                                 class="mb-4 text-blue-500 dark:text-blue-400"
                                 :size="32"
                             />
-                            <h3 class="text-xl font-semibold text-slate-900 dark:text-white">{{ pillar.title }}</h3>
+                            <h3 class="text-xl font-semibold text-slate-900 dark:text-white">
+                                {{ pillar.title }}
+                            </h3>
                             <p class="mt-4 text-slate-600 dark:text-slate-300">
                                 {{ pillar.body }}
                             </p>
@@ -226,10 +230,14 @@ const products = [
             <section class="bg-slate-50 dark:bg-slate-800/50 px-6 py-16 lg:px-20">
                 <div class="mx-auto flex max-w-6xl flex-col gap-12 lg:flex-row">
                     <div class="flex-1">
-                        <p class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-500 dark:text-blue-400">
+                        <p
+                            class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-500 dark:text-blue-400"
+                        >
                             Markets we secure
                         </p>
-                        <h2 class="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">
+                        <h2
+                            class="mt-4 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl"
+                        >
                             Convergent solutions for every sector
                         </h2>
                         <p class="mt-4 text-lg text-slate-600 dark:text-slate-300">
@@ -252,14 +260,14 @@ const products = [
                             </div>
                         </div>
                     </div>
-                    <div class="flex-1 rounded-3xl bg-slate-950 dark:bg-slate-900 p-10 text-white shadow-2xl">
+                    <div class="flex-1 rounded-3xl bg-slate-50 dark:bg-slate-900 p-10 shadow-2xl">
                         <p class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-200">
                             Convergent blueprint
                         </p>
                         <h3 class="mt-4 text-3xl font-bold">
                             Unified issuance, monitoring, and engagement.
                         </h3>
-                        <p class="mt-4 text-slate-300">
+                        <p class="mt-4">
                             We distilled Matica’s convergent systems narrative into actionable
                             guardrails for Azitsorog.
                         </p>
@@ -267,15 +275,15 @@ const products = [
                             <li
                                 v-for="step in convergentSteps"
                                 :key="step"
-                                class="flex items-start text-slate-200"
+                                class="flex items-start"
                             >
-                                <ArrowUpRight class="mr-3 mt-1 text-blue-300" :size="18" />
+                                <ArrowUpRight class="mr-3 mt-1 text-blue-500" :size="18" />
                                 <span>{{ step }}</span>
                             </li>
                         </ul>
                         <RouterLink to="/contact" class="mt-10 block">
                             <button
-                                class="flex w-full items-center justify-center rounded-full bg-blue-400 px-8 py-4 font-semibold text-slate-950 transition hover:bg-blue-300"
+                                class="flex w-full items-center justify-center rounded-full bg-blue-400 px-8 py-4 font-semibold transition hover:bg-blue-300"
                             >
                                 <Phone class="mr-2" :size="20" /> Plan a deployment
                             </button>
@@ -293,17 +301,6 @@ const products = [
                             class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-600 dark:text-blue-300"
                         >
                             Matica hardware we distribute
-                        </p>
-
-                        <h2
-                            class="mt-4 text-3xl font-bold sm:text-4xl text-slate-900 dark:text-white"
-                        >
-                            Product showcase by Matica Secure ID
-                        </h2>
-
-                        <p class="mt-4 text-lg text-slate-600 dark:text-slate-200">
-                            Azitsorog focuses exclusively on Matica printers, engravers, and secure
-                            ID solutions—mirroring the portfolio highlighted on the Secure ID page.
                         </p>
                     </div>
 
@@ -377,7 +374,9 @@ const products = [
             <section class="bg-blue-600 dark:bg-blue-800 px-6 py-16 text-white lg:px-20">
                 <div class="mx-auto flex max-w-6xl flex-col gap-10 lg:flex-row lg:items-center">
                     <div class="flex-1 space-y-6">
-                        <p class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-200 dark:text-blue-100">
+                        <p
+                            class="text-sm font-semibold uppercase tracking-[0.4em] text-blue-200 dark:text-blue-100"
+                        >
                             Ready for next steps
                         </p>
                         <h2 class="text-3xl font-bold sm:text-4xl">
