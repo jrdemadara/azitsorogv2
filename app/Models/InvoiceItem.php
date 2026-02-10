@@ -6,13 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class InvoiceItem extends Model
 {
-    protected $connection = 'pgsql_main';
+    protected $connection = "pgsql_main";
     protected $fillable = [
-        'item_name',
-        'quantity',
-        'unit_cost',
-        'amount',
-        'draft_invoice_id',
+        "product_id",
+        "item_name",
+        "quantity",
+        "unit_cost",
+        "amount",
+        "draft_invoice_id",
     ];
 
     public static function boot()
@@ -37,7 +38,12 @@ class InvoiceItem extends Model
 
     public function draftInvoice()
     {
-        return $this->belongsTo(DraftInvoice::class, 'draft_invoice_id');
+        return $this->belongsTo(DraftInvoice::class, "draft_invoice_id");
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 
     /**
@@ -46,8 +52,15 @@ class InvoiceItem extends Model
     public function updateTotalAmount(): void
     {
         if ($this->draftInvoice) {
-            $total = $this->draftInvoice->items()->sum('amount'); // Sum all items
-            $this->draftInvoice->update(['total_amount' => $total]); // Update parent
+            $total = $this->draftInvoice->items()->sum("amount"); // Sum all items
+            $vatable = $total / 1.12;
+            $vat = $vatable * 0.12;
+
+            $this->draftInvoice->update([
+                "total_amount" => $total,
+                "vatable_sales" => round($vatable, 2),
+                "vat" => round($vat, 2),
+            ]);
         }
     }
 }

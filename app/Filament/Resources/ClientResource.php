@@ -14,59 +14,50 @@ class ClientResource extends Resource
 {
     protected static ?string $model = Client::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-group';
-
-    public static function getNavigationGroup(): ?string
-    {
-        return 'Options';
-    }
+    protected static ?string $navigationIcon = "heroicon-o-user-group";
+    protected static ?string $navigationGroup = "Management";
+    protected static ?int $navigationSort = 4;
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                TextInput::make('name')->required(),
-                TextInput::make('tin')->unique()->required(),
-                TextInput::make('address')->required(),
-                TextInput::make('terms')->required(),
-            ]);
+        return $form->schema([
+            TextInput::make("name")->required(),
+            TextInput::make("tin")->unique()->required(),
+            TextInput::make("address")->required(),
+            TextInput::make("terms")->required(),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('name')->sortable()->searchable(),
-                TextColumn::make('tin')->sortable()->searchable(),
-                TextColumn::make('address')->limit(30),
-                TextColumn::make('terms'),
-                TextColumn::make('created_at')->dateTime('M d, Y'),
+                TextColumn::make("name")->sortable()->searchable(),
+                TextColumn::make("tin")->sortable()->searchable(),
+                TextColumn::make("address")->limit(30),
+                TextColumn::make("terms"),
+                TextColumn::make("created_at")->dateTime("M d, Y"),
             ])
             ->filters([
                 // Add filters if needed
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
+            ->actions([Tables\Actions\EditAction::make(), Tables\Actions\DeleteAction::make()])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()]),
             ]);
     }
     public static function getRelations(): array
     {
         return [
-            //
-        ];
+                //
+            ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListClients::route('/'),
-            'create' => Pages\CreateClient::route('/create'),
-            'edit'   => Pages\EditClient::route('/{record}/edit'),
+            "index" => Pages\ListClients::route("/"),
+            "create" => Pages\CreateClient::route("/create"),
+            "edit" => Pages\EditClient::route("/{record}/edit"),
         ];
     }
 }

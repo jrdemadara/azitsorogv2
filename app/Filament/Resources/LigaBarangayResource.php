@@ -19,17 +19,19 @@ class LigaBarangayResource extends Resource
 {
     protected static ?string $model = LigaBarangay::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-building-library';
+    protected static ?string $navigationIcon = "heroicon-o-building-library";
 
-    protected static ?string $navigationGroup = 'Client Management';
+    protected static ?string $navigationGroup = "Clients";
 
-    protected static ?string $navigationLabel = 'Liga ng Barangay';
+    protected static ?string $navigationLabel = "Liga ng Barangay";
+
+    protected static ?int $navigationSort = 10;
 
     protected static ?bool $canCreate = false;
 
     public static function getBreadcrumb(): string
     {
-        return 'Liga ng Barangay';
+        return "Liga ng Barangay";
     }
 
     public static function canCreate(): bool
@@ -39,10 +41,9 @@ class LigaBarangayResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                //
-            ]);
+        return $form->schema([
+            //
+        ]);
     }
 
     public static function table(Table $table): Table
@@ -52,26 +53,26 @@ class LigaBarangayResource extends Resource
                 //! find way to get the photo
                 // ImageColumn::make('header_image')
                 //     ->disk('s3'),
-                TextColumn::make('id')->sortable()->searchable(),
-                TextColumn::make('lastname')->sortable()->searchable(),
-                TextColumn::make('firstname')->sortable()->searchable(),
-                TextColumn::make('middlename')->sortable()->searchable(),
-                TextColumn::make('extension')->sortable()->searchable(),
-                TextColumn::make('home_address')->sortable()->searchable(),
-                TextColumn::make('gender')->sortable()->searchable(),
-                TextColumn::make('birthdate')->sortable()->searchable(),
-                TextColumn::make('barangay')->sortable()->searchable(),
-                TextColumn::make('city')->sortable()->searchable(),
-                TextColumn::make('province')->sortable()->searchable(),
-                TextColumn::make('region')->sortable()->searchable(),
-                TextColumn::make('emergency_contact_person')->sortable()->searchable(),
-                TextColumn::make('emergency_contact_number')->sortable()->searchable(),
-                TextColumn::make('year_elected')->sortable()->searchable(),
-                TextColumn::make('term')->sortable()->searchable(),
+                TextColumn::make("id")->sortable()->searchable(),
+                TextColumn::make("lastname")->sortable()->searchable(),
+                TextColumn::make("firstname")->sortable()->searchable(),
+                TextColumn::make("middlename")->sortable()->searchable(),
+                TextColumn::make("extension")->sortable()->searchable(),
+                TextColumn::make("home_address")->sortable()->searchable(),
+                TextColumn::make("gender")->sortable()->searchable(),
+                TextColumn::make("birthdate")->sortable()->searchable(),
+                TextColumn::make("barangay")->sortable()->searchable(),
+                TextColumn::make("city")->sortable()->searchable(),
+                TextColumn::make("province")->sortable()->searchable(),
+                TextColumn::make("region")->sortable()->searchable(),
+                TextColumn::make("emergency_contact_person")->sortable()->searchable(),
+                TextColumn::make("emergency_contact_number")->sortable()->searchable(),
+                TextColumn::make("year_elected")->sortable()->searchable(),
+                TextColumn::make("term")->sortable()->searchable(),
 
-                TextColumn::make('created_at')->dateTime('M d, Y'),
+                TextColumn::make("created_at")->dateTime("M d, Y"),
             ])
-            ->defaultSort('id', 'desc')
+            ->defaultSort("id", "desc")
             ->filters([
                 //
             ])
@@ -79,48 +80,39 @@ class LigaBarangayResource extends Resource
                 //Tables\Actions\EditAction::make(),
             ])
             ->headerActions([
-                Tables\Actions\Action::make('Download')
+                Tables\Actions\Action::make("Download")
                     ->form([
                         Grid::make(2) // 👈 Arrange the next two fields in one row
-                        ->schema([
-                            TextInput::make('start')
-                                ->label('Start ID')
-                                ->numeric()
-                                ->required(),
-                            TextInput::make('end')
-                                ->label('End ID')
-                                ->numeric()
-                                ->required(),
-                        ]),
-
+                            ->schema([
+                                TextInput::make("start")->label("Start ID")->numeric()->required(),
+                                TextInput::make("end")->label("End ID")->numeric()->required(),
+                            ]),
                     ])
-                    ->modalHeading('Download')
+                    ->modalHeading("Download")
                     ->action(function (array $data) {
-                        return self::exportData($data['start'], $data['end']);
+                        return self::exportData($data["start"], $data["end"]);
                     })
-                    ->color('success')
-                    ->icon('heroicon-o-arrow-down-circle'),
+                    ->color("success")
+                    ->icon("heroicon-o-arrow-down-circle"),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()]),
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            //
-        ];
+                //
+            ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListLigaBarangays::route('/'),
-            'create' => Pages\CreateLigaBarangay::route('/create'),
-            'edit' => Pages\EditLigaBarangay::route('/{record}/edit'),
+            "index" => Pages\ListLigaBarangays::route("/"),
+            "create" => Pages\CreateLigaBarangay::route("/create"),
+            "edit" => Pages\EditLigaBarangay::route("/{record}/edit"),
         ];
     }
 
@@ -132,27 +124,27 @@ class LigaBarangayResource extends Resource
         set_time_limit(300);
 
         $results = LigaBarangay::select(
-            'id',
-            'lastname',
-            'firstname',
-            'middlename',
-            'extension',
-            'home_address',
-            'gender',
-            'birthdate',
-            'region',
-            'province',
-            'city',
-            'barangay',
-            'signature',
-            'photo',
-            'emergency_contact_person',
-            'emergency_contact_number',
-            'year_elected',
-            'term'
+            "id",
+            "lastname",
+            "firstname",
+            "middlename",
+            "extension",
+            "home_address",
+            "gender",
+            "birthdate",
+            "region",
+            "province",
+            "city",
+            "barangay",
+            "signature",
+            "photo",
+            "emergency_contact_person",
+            "emergency_contact_number",
+            "year_elected",
+            "term",
         )
-            ->whereBetween('id', [$start, $end])
-            ->orderBy('id', 'asc')
+            ->whereBetween("id", [$start, $end])
+            ->orderBy("id", "asc")
             ->get();
 
         // Create a ZIP file
@@ -167,8 +159,20 @@ class LigaBarangayResource extends Resource
 
             // Add images
             foreach ($results as $person) {
-                static::addFileToZip($zip, 'profiles/' . $person->photo, 'profiles', $person->id, 'jpg');
-                static::addFileToZip($zip, 'signatures/' . $person->signature, 'signatures', $person->id, 'png');
+                static::addFileToZip(
+                    $zip,
+                    "profiles/" . $person->photo,
+                    "profiles",
+                    $person->id,
+                    "jpg",
+                );
+                static::addFileToZip(
+                    $zip,
+                    "signatures/" . $person->signature,
+                    "signatures",
+                    $person->id,
+                    "png",
+                );
             }
 
             $zip->close();
@@ -176,15 +180,17 @@ class LigaBarangayResource extends Resource
             return response()->download($zipPath)->deleteFileAfterSend(true);
         }
 
-        return response()->json(['message' => 'Unable to create ZIP file'], 500);
+        return response()->json(["message" => "Unable to create ZIP file"], 500);
     }
 
     private static function generateCSV($results)
     {
-        $csv = "ID, Lastname, Firstname, Middlename, Extension, Gender, Birthdate, Home Address, Region, Province, City, Barangay, Emergency Contact Person, Emergency Contact Number, Year Elected, Term \n";
+        $csv =
+            "ID, Lastname, Firstname, Middlename, Extension, Gender, Birthdate, Home Address, Region, Province, City, Barangay, Emergency Contact Person, Emergency Contact Number, Year Elected, Term \n";
 
         foreach ($results as $person) {
-            $csv .= self::escapeCSV([
+            $csv .=
+                self::escapeCSV([
                     $person->id,
                     $person->lastname,
                     $person->firstname,
@@ -200,7 +206,7 @@ class LigaBarangayResource extends Resource
                     $person->emergency_contact_person,
                     $person->emergency_contact_number,
                     $person->year_elected,
-                    $person->term
+                    $person->term,
                 ]) . "\n";
         }
 
@@ -209,12 +215,17 @@ class LigaBarangayResource extends Resource
 
     private static function escapeCSV($fields)
     {
-        return implode(',', array_map(function ($field) {
-            // Escape double quotes by replacing " with ""
-            $escaped = str_replace('"', '""', $field);
-            // Wrap the field in double quotes if it contains a comma or double quotes
-            return (strpos($escaped, ',') !== false || strpos($escaped, '"') !== false) ? "\"$escaped\"" : $escaped;
-        }, $fields));
+        return implode(
+            ",",
+            array_map(function ($field) {
+                // Escape double quotes by replacing " with ""
+                $escaped = str_replace('"', '""', $field);
+                // Wrap the field in double quotes if it contains a comma or double quotes
+                return strpos($escaped, ",") !== false || strpos($escaped, '"') !== false
+                    ? "\"$escaped\""
+                    : $escaped;
+            }, $fields),
+        );
     }
 
     private static function addFileToZip($zip, $filePath, $folder, $id, $extension)
@@ -222,8 +233,8 @@ class LigaBarangayResource extends Resource
         $filePath = "private/{$filePath}";
 
         // Storage disk is `external_storage` as defined in config/filesystems.php
-        if (Storage::disk('external_storage')->exists($filePath)) {
-            $fileContent = Storage::disk('external_storage')->get($filePath);
+        if (Storage::disk("external_storage")->exists($filePath)) {
+            $fileContent = Storage::disk("external_storage")->get($filePath);
             $zip->addFromString("{$folder}/{$id}.{$extension}", $fileContent);
         }
     }

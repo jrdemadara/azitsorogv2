@@ -12,6 +12,8 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements FilamentUser
 {
+    protected $connection = "pgsql";
+
     public function canAccessPanel(Panel $panel): bool
     {
         return true;
