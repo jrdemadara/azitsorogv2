@@ -4,7 +4,6 @@ namespace App\Http\Controllers\GateLog;
 
 use App\Mail\GateLogOtpMail;
 use App\Models\Gatelog\AllowedEmail;
-use App\Models\Gatelog\EmailOtp;
 use App\Models\Gatelog\GatelogUser;
 use App\Models\Gatelog\PersonalAccessToken;
 use Carbon\Carbon;
@@ -12,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redis;
 use Laravel\Sanctum\NewAccessToken;
 
 class GateLogAuthController extends \App\Http\Controllers\Controller
@@ -97,28 +97,26 @@ class GateLogAuthController extends \App\Http\Controllers\Controller
             return response()->json(["message" => "User not found."], 404);
         }
 
-        $otp = EmailOtp::query()
-            ->where("user_id", $user->id)
-            ->whereNull("verified_at")
-            ->where("expires_at", ">", Carbon::now())
-            ->latest("id")
-            ->first();
-
-        if (!$otp) {
+        $otpHash = Redis::get($this->otpKey($email));
+        if (!$otpHash) {
             return response()->json(["message" => "No active OTP found."], 422);
         }
 
-        if ($otp->attempts >= 5) {
+        $attempts = (int) (Redis::get($this->otpAttemptsKey($email)) ?? 0);
+        if ($attempts >= 5) {
             return response()->json(["message" => "OTP attempts exceeded."], 429);
         }
 
-        if (!Hash::check($data["otp"], $otp->code_hash)) {
-            $otp->increment("attempts");
+        if (!Hash::check($data["otp"], $otpHash)) {
+            $attempts = Redis::incr($this->otpAttemptsKey($email));
+            if ($attempts === 1) {
+                Redis::expire($this->otpAttemptsKey($email), self::OTP_TTL_SECONDS);
+            }
             return response()->json(["message" => "Invalid OTP."], 422);
         }
 
-        $otp->verified_at = Carbon::now();
-        $otp->save();
+        Redis::del($this->otpKey($email));
+        Redis::del($this->otpAttemptsKey($email));
 
         $user->email_verified_at = Carbon::now();
         $user->save();
@@ -184,14 +182,21 @@ class GateLogAuthController extends \App\Http\Controllers\Controller
     {
         $code = (string) random_int(100000, 999999);
 
-        EmailOtp::query()->create([
-            "school_id" => $schoolId,
-            "user_id" => $userId,
-            "email" => $email,
-            "code_hash" => Hash::make($code),
-            "expires_at" => Carbon::now()->addMinutes(5),
-        ]);
+        Redis::setex($this->otpKey($email), self::OTP_TTL_SECONDS, Hash::make($code));
+        Redis::del($this->otpAttemptsKey($email));
 
         Mail::to($email)->send(new GateLogOtpMail($code));
     }
+
+    private function otpKey(string $email): string
+    {
+        return "gatelog:otp:" . strtolower($email);
+    }
+
+    private function otpAttemptsKey(string $email): string
+    {
+        return "gatelog:otp:attempts:" . strtolower($email);
+    }
+
+    private const OTP_TTL_SECONDS = 1800;
 }
