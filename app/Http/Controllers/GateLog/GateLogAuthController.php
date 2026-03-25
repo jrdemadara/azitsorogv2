@@ -194,13 +194,14 @@ class GateLogAuthController extends \App\Http\Controllers\Controller
     {
         $plainTextToken = bin2hex(random_bytes(40));
 
-        $token = PersonalAccessToken::query()->create([
-            "tokenable_type" => GatelogUser::class,
-            "tokenable_id" => $user->id,
+        $token = new PersonalAccessToken();
+        $token->forceFill([
             "name" => $name,
             "token" => hash("sha256", $plainTextToken),
             "abilities" => ["*"],
         ]);
+        $token->tokenable()->associate($user);
+        $token->save();
 
         return new NewAccessToken($token, $token->getKey() . "|" . $plainTextToken)->plainTextToken;
     }
