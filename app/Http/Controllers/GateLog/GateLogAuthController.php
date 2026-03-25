@@ -28,7 +28,6 @@ class GateLogAuthController extends \App\Http\Controllers\Controller
 
         $allowed = AllowedEmail::query()
             ->whereRaw("LOWER(email) = ?", [$email])
-            ->where("is_used", false)
             ->first();
 
         if (!$allowed) {
@@ -52,16 +51,14 @@ class GateLogAuthController extends \App\Http\Controllers\Controller
             ]);
 
             $this->issueOtp((int) $allowed->school_id, $user->id, $email);
-
-            // Mark all matching rows used, so one account cannot be re-registered.
-            AllowedEmail::query()
-                ->whereRaw("LOWER(email) = ?", [$email])
-                ->update(["is_used" => true]);
         });
 
-        return response()->json([
-            "message" => "Registered. OTP was generated and should be sent to email.",
-        ], 201);
+        return response()->json(
+            [
+                "message" => "Registered. OTP was generated and should be sent to email.",
+            ],
+            201,
+        );
     }
 
     public function sendOtp(Request $request)
