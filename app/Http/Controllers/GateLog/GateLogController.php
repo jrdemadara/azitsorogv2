@@ -14,6 +14,18 @@ use Illuminate\Http\Request;
 
 class GateLogController extends \App\Http\Controllers\Controller
 {
+    public function schools()
+    {
+        $schools = School::query()
+            ->where("is_active", true)
+            ->orderBy("name")
+            ->get(["code", "name"]);
+
+        return response()->json([
+            "data" => $schools,
+        ]);
+    }
+
     public function linkStudent(Request $request)
     {
         $user = $request->user();
