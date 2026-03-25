@@ -62,7 +62,8 @@ class NotificationDeliveryProcessor
                 $gateLog->save();
             } else {
                 $delivery->status = "failed";
-                $delivery->provider_message = "Provider send failed";
+                $delivery->provider_message =
+                    $pushService->lastErrorMessage() ?? "Provider send failed";
                 $delivery->save();
             }
 
