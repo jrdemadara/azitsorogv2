@@ -23,6 +23,7 @@ Route::prefix("gatelog")->group(function () {
     Route::post("/ingest/logs", [GateLogController::class, "ingestGateLog"]);
 
     Route::middleware(["auth.gatelog"])->group(function () {
+        Route::get("/students", [GateLogController::class, "linkedStudents"]);
         Route::post("/students/link", [GateLogController::class, "linkStudent"]);
         Route::post("/devices/register", [GateLogController::class, "registerDevice"]);
         Route::get("/logs/pull", [GateLogController::class, "pullLogs"]);

@@ -82,6 +82,29 @@ class GateLogController extends \App\Http\Controllers\Controller
         return response()->json(["message" => "Device registered."]);
     }
 
+    public function linkedStudents(Request $request)
+    {
+        $user = $request->user();
+
+        $rows = ParentStudent::query()
+            ->join("students", function ($join) {
+                $join->on("students.id", "=", "parent_students.student_id");
+                $join->on("students.school_id", "=", "parent_students.school_id");
+            })
+            ->join("schools", "schools.id", "=", "parent_students.school_id")
+            ->where("parent_students.user_id", $user->id)
+            ->orderByDesc("parent_students.id")
+            ->get([
+                "students.student_id_number",
+                "students.full_name",
+                "schools.code as school_code",
+            ]);
+
+        return response()->json([
+            "data" => $rows,
+        ]);
+    }
+
     public function ingestGateLog(Request $request)
     {
         $apiKey = (string) env("GATELOG_INGEST_KEY", "");
