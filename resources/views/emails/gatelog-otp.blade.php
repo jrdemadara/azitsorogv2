@@ -12,7 +12,7 @@
                 <table role="presentation" cellpadding="0" cellspacing="0" width="620" style="max-width:620px; width:100%; background:#ffffff; border-radius:14px; overflow:hidden; border:1px solid #e5e7eb;">
                     <tr>
                         <td align="center" style="padding:20px 24px 10px 24px; background:#ffffff;">
-                            <img src="{{ asset('images/logo-full.png') }}" alt="Azitsorog Inc." style="max-width:360px; width:100%; height:auto; display:block;">
+                            <h1 style="margin:0; font-size:28px; line-height:1.2; color:#111827; font-weight:700;">Azitsorog Inc.</h1>
                         </td>
                     </tr>
                     <tr>
