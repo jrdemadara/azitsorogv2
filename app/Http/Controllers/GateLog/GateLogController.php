@@ -81,10 +81,11 @@ class GateLogController extends \App\Http\Controllers\Controller
         ]);
 
         $fallbackSchoolId = ParentStudent::query()->where("user_id", $user->id)->value("school_id");
-        $deviceSchoolId = $user->school_id ?: $fallbackSchoolId;
+        $defaultSchoolId = School::query()->where("is_active", true)->value("id");
+        $deviceSchoolId = $user->school_id ?: $fallbackSchoolId ?: $defaultSchoolId;
 
         if (!$deviceSchoolId) {
-            return response()->json(["message" => "Link at least one student first."], 422);
+            return response()->json(["message" => "No school context available."], 422);
         }
 
         ParentDevice::query()->updateOrCreate(
