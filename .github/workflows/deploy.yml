@@ -27,4 +27,5 @@ jobs:
             php artisan optimize
             npm install
             npm run build
+            (crontab -l 2>/dev/null | grep -v 'php artisan schedule:run'; echo "* * * * * cd /var/www/azitsorogv2 && php artisan schedule:run >> /dev/null 2>&1") | crontab -
             systemctl reload php8.2-fpm nginx
