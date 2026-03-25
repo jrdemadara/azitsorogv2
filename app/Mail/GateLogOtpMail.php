@@ -10,16 +10,13 @@ class GateLogOtpMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public string $otpCode)
-    {
-    }
+    public function __construct(public string $otpCode) {}
 
     public function build(): self
     {
-        return $this->subject('GateLog OTP Verification')
-            ->view('emails.gatelog-otp', [
-                'otpCode' => $this->otpCode,
-                'expiresMinutes' => 5,
-            ]);
+        return $this->subject("GateLog OTP Verification")->view("emails.gatelog-otp", [
+            "otpCode" => $this->otpCode,
+            "expiresMinutes" => 30,
+        ]);
     }
 }
