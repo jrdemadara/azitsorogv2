@@ -24,7 +24,7 @@ class GateLogController extends \App\Http\Controllers\Controller
         ]);
 
         $school = School::query()->where("code", $data["school_code"])->first();
-        if (!$school || (int) $school->id !== (int) $user->school_id) {
+        if (!$school) {
             return response()->json(["message" => "Invalid school context."], 422);
         }
 
@@ -162,13 +162,9 @@ class GateLogController extends \App\Http\Controllers\Controller
         $user = $request->user();
         $since = $request->query("since");
 
-        $studentIds = ParentStudent::query()
-            ->where("school_id", $user->school_id)
-            ->where("user_id", $user->id)
-            ->pluck("student_id");
+        $studentIds = ParentStudent::query()->where("user_id", $user->id)->pluck("student_id");
 
         $query = GateLog::query()
-            ->where("school_id", $user->school_id)
             ->whereIn("student_id", $studentIds)
             ->orderByDesc("logged_at")
             ->limit(100);

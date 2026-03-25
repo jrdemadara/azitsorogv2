@@ -7,7 +7,6 @@ use App\Models\Gatelog\AllowedEmail;
 use App\Models\Gatelog\EmailOtp;
 use App\Models\Gatelog\GatelogUser;
 use App\Models\Gatelog\PersonalAccessToken;
-use App\Models\Gatelog\School;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,37 +19,23 @@ class GateLogAuthController extends \App\Http\Controllers\Controller
     public function register(Request $request)
     {
         $data = $request->validate([
-            "school_code" => ["required", "string"],
             "name" => ["required", "string", "max:255"],
             "email" => ["required", "email", "max:255"],
             "password" => ["required", "string", "min:8"],
         ]);
 
-        $school = School::query()
-            ->where("code", $data["school_code"])
-            ->where("is_active", true)
-            ->first();
-        if (!$school) {
-            return response()->json(["message" => "School not found or inactive."], 422);
-        }
-
         $email = strtolower($data["email"]);
 
         $allowed = AllowedEmail::query()
-            ->where("school_id", $school->id)
             ->whereRaw("LOWER(email) = ?", [$email])
+            ->where("is_used", false)
             ->first();
 
         if (!$allowed) {
-            return response()->json(["message" => "Email is not allowed for this school."], 422);
-        }
-
-        if ($allowed->is_used) {
-            return response()->json(["message" => "Email is already used."], 422);
+            return response()->json(["message" => "Email is not allowed."], 422);
         }
 
         $existing = GatelogUser::query()
-            ->where("school_id", $school->id)
             ->whereRaw("LOWER(email) = ?", [$email])
             ->first();
 
@@ -58,51 +43,35 @@ class GateLogAuthController extends \App\Http\Controllers\Controller
             return response()->json(["message" => "Email already registered."], 422);
         }
 
-        DB::connection("pgsql_gatelog")->transaction(function () use (
-            $school,
-            $data,
-            $email,
-            $allowed,
-        ) {
+        DB::connection("pgsql_gatelog")->transaction(function () use ($data, $email, $allowed) {
             $user = GatelogUser::query()->create([
-                "school_id" => $school->id,
+                "school_id" => $allowed->school_id,
                 "name" => $data["name"],
                 "email" => $email,
                 "password" => $data["password"],
             ]);
 
-            $this->issueOtp($school->id, $user->id, $email);
+            $this->issueOtp((int) $allowed->school_id, $user->id, $email);
 
-            $allowed->is_used = true;
-            $allowed->save();
+            // Mark all matching rows used, so one account cannot be re-registered.
+            AllowedEmail::query()
+                ->whereRaw("LOWER(email) = ?", [$email])
+                ->update(["is_used" => true]);
         });
 
-        return response()->json(
-            [
-                "message" => "Registered. OTP was generated and should be sent to email.",
-            ],
-            201,
-        );
+        return response()->json([
+            "message" => "Registered. OTP was generated and should be sent to email.",
+        ], 201);
     }
 
     public function sendOtp(Request $request)
     {
         $data = $request->validate([
-            "school_code" => ["required", "string"],
             "email" => ["required", "email"],
         ]);
 
-        $school = School::query()
-            ->where("code", $data["school_code"])
-            ->where("is_active", true)
-            ->first();
-        if (!$school) {
-            return response()->json(["message" => "School not found or inactive."], 422);
-        }
-
         $email = strtolower($data["email"]);
         $user = GatelogUser::query()
-            ->where("school_id", $school->id)
             ->whereRaw("LOWER(email) = ?", [$email])
             ->first();
 
@@ -110,7 +79,7 @@ class GateLogAuthController extends \App\Http\Controllers\Controller
             return response()->json(["message" => "User not found."], 404);
         }
 
-        $this->issueOtp($school->id, $user->id, $email);
+        $this->issueOtp((int) $user->school_id, $user->id, $email);
 
         return response()->json(["message" => "OTP generated."]);
     }
@@ -118,22 +87,12 @@ class GateLogAuthController extends \App\Http\Controllers\Controller
     public function verifyOtp(Request $request)
     {
         $data = $request->validate([
-            "school_code" => ["required", "string"],
             "email" => ["required", "email"],
             "otp" => ["required", "digits:6"],
         ]);
 
-        $school = School::query()
-            ->where("code", $data["school_code"])
-            ->where("is_active", true)
-            ->first();
-        if (!$school) {
-            return response()->json(["message" => "School not found or inactive."], 422);
-        }
-
         $email = strtolower($data["email"]);
         $user = GatelogUser::query()
-            ->where("school_id", $school->id)
             ->whereRaw("LOWER(email) = ?", [$email])
             ->first();
 
@@ -142,7 +101,6 @@ class GateLogAuthController extends \App\Http\Controllers\Controller
         }
 
         $otp = EmailOtp::query()
-            ->where("school_id", $school->id)
             ->where("user_id", $user->id)
             ->whereNull("verified_at")
             ->where("expires_at", ">", Carbon::now())
@@ -185,22 +143,12 @@ class GateLogAuthController extends \App\Http\Controllers\Controller
     public function login(Request $request)
     {
         $data = $request->validate([
-            "school_code" => ["required", "string"],
             "email" => ["required", "email"],
             "password" => ["required", "string"],
         ]);
 
-        $school = School::query()
-            ->where("code", $data["school_code"])
-            ->where("is_active", true)
-            ->first();
-        if (!$school) {
-            return response()->json(["message" => "School not found or inactive."], 422);
-        }
-
         $email = strtolower($data["email"]);
         $user = GatelogUser::query()
-            ->where("school_id", $school->id)
             ->whereRaw("LOWER(email) = ?", [$email])
             ->first();
 

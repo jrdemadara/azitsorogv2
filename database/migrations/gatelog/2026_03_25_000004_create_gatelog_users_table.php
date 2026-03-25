@@ -25,7 +25,7 @@ return new class extends Migration {
             $table->rememberToken();
             $table->timestamps();
 
-            $table->unique(["school_id", "email"]);
+            $table->unique("email");
         });
     }
 
