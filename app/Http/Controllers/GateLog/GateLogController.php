@@ -131,7 +131,7 @@ class GateLogController extends \App\Http\Controllers\Controller
         PushNotificationService $pushService,
         NotificationDeliveryProcessor $processor,
     ) {
-        $apiKey = (string) env("GATELOG_INGEST_KEY", "");
+        $apiKey = (string) config("services.gatelog.ingest_key", "");
         $provided = (string) $request->header("X-GateLog-Key", "");
         if ($apiKey === "" || !hash_equals($apiKey, $provided)) {
             return response()->json(["message" => "Unauthorized."], 401);
