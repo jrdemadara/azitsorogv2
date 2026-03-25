@@ -81,14 +81,15 @@ class GateLogController extends \App\Http\Controllers\Controller
         ]);
 
         $fallbackSchoolId = ParentStudent::query()->where("user_id", $user->id)->value("school_id");
+        $deviceSchoolId = $user->school_id ?: $fallbackSchoolId;
 
-        if (!$fallbackSchoolId) {
+        if (!$deviceSchoolId) {
             return response()->json(["message" => "Link at least one student first."], 422);
         }
 
         ParentDevice::query()->updateOrCreate(
             [
-                "school_id" => $fallbackSchoolId,
+                "school_id" => $deviceSchoolId,
                 "user_id" => $user->id,
                 "push_token" => $data["push_token"],
             ],
