@@ -110,6 +110,7 @@ class GateLogController extends \App\Http\Controllers\Controller
                 "students.student_id_number",
                 "students.full_name",
                 "schools.code as school_code",
+                "schools.name as school_name",
             ]);
 
         return response()->json([
