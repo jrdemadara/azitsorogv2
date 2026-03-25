@@ -9,6 +9,8 @@ use App\Models\Gatelog\ParentStudent;
 use App\Models\Gatelog\School;
 use App\Models\Gatelog\Student;
 use App\Models\Gatelog\StudentEmailAuthorization;
+use App\Services\Gatelog\NotificationDeliveryProcessor;
+use App\Services\Gatelog\PushNotificationService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -78,9 +80,15 @@ class GateLogController extends \App\Http\Controllers\Controller
             "push_token" => ["required", "string"],
         ]);
 
+        $fallbackSchoolId = ParentStudent::query()->where("user_id", $user->id)->value("school_id");
+
+        if (!$fallbackSchoolId) {
+            return response()->json(["message" => "Link at least one student first."], 422);
+        }
+
         ParentDevice::query()->updateOrCreate(
             [
-                "school_id" => $user->school_id,
+                "school_id" => $fallbackSchoolId,
                 "user_id" => $user->id,
                 "push_token" => $data["push_token"],
             ],
@@ -118,8 +126,11 @@ class GateLogController extends \App\Http\Controllers\Controller
         ]);
     }
 
-    public function ingestGateLog(Request $request)
-    {
+    public function ingestGateLog(
+        Request $request,
+        PushNotificationService $pushService,
+        NotificationDeliveryProcessor $processor,
+    ) {
         $apiKey = (string) env("GATELOG_INGEST_KEY", "");
         $provided = (string) $request->header("X-GateLog-Key", "");
         if ($apiKey === "" || !hash_equals($apiKey, $provided)) {
@@ -188,6 +199,9 @@ class GateLogController extends \App\Http\Controllers\Controller
                     "status" => "pending",
                 ]);
             }
+
+            // Push immediately for fresh gate logs; scheduler remains as a retry path.
+            $processor->processPending($pushService, 200, (int) $log->id);
         }
 
         return response()->json(["message" => "Gate log ingested.", "id" => $log->id], 201);
@@ -201,12 +215,32 @@ class GateLogController extends \App\Http\Controllers\Controller
         $studentIds = ParentStudent::query()->where("user_id", $user->id)->pluck("student_id");
 
         $query = GateLog::query()
-            ->whereIn("student_id", $studentIds)
-            ->orderByDesc("logged_at")
-            ->limit(100);
+            ->join("students", function ($join) {
+                $join->on("students.id", "=", "gate_logs.student_id");
+                $join->on("students.school_id", "=", "gate_logs.school_id");
+            })
+            ->join("schools", "schools.id", "=", "gate_logs.school_id")
+            ->whereIn("gate_logs.student_id", $studentIds)
+            ->orderByDesc("gate_logs.logged_at")
+            ->limit(100)
+            ->select([
+                "gate_logs.id",
+                "gate_logs.school_id",
+                "gate_logs.student_id",
+                "gate_logs.direction",
+                "gate_logs.logged_at",
+                "gate_logs.gate_name",
+                "gate_logs.source_ref",
+                "gate_logs.push_notified",
+                "gate_logs.push_notified_at",
+                "schools.code as school_code",
+                "schools.name as school_name",
+                "students.student_id_number",
+                "students.full_name as student_name",
+            ]);
 
         if ($since) {
-            $query->where("logged_at", ">", Carbon::parse($since));
+            $query->where("gate_logs.logged_at", ">", Carbon::parse($since));
         }
 
         return response()->json($query->get());
