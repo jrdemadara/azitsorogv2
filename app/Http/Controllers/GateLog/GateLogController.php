@@ -162,49 +162,31 @@ class GateLogController extends \App\Http\Controllers\Controller
             return response()->json(["message" => "Student not found."], 404);
         }
 
-        $sourceRef = $data["source_ref"] ?? null;
-        if ($sourceRef) {
-            $log = GateLog::query()->firstOrCreate(
-                [
-                    "school_id" => $school->id,
-                    "source_ref" => $sourceRef,
-                ],
-                [
-                    "student_id" => $student->id,
-                    "direction" => $data["direction"],
-                    "logged_at" => Carbon::parse($data["logged_at"]),
-                    "gate_name" => $data["gate_name"] ?? null,
-                ],
-            );
-        } else {
-            $log = GateLog::query()->create([
+        $log = GateLog::query()->create([
+            "school_id" => $school->id,
+            "student_id" => $student->id,
+            "direction" => $data["direction"],
+            "logged_at" => Carbon::parse($data["logged_at"]),
+            "gate_name" => $data["gate_name"] ?? null,
+            "source_ref" => $data["source_ref"] ?? null,
+        ]);
+
+        $parentLinks = ParentStudent::query()
+            ->where("school_id", $school->id)
+            ->where("student_id", $student->id)
+            ->get(["user_id"]);
+
+        foreach ($parentLinks as $link) {
+            NotificationDelivery::query()->create([
                 "school_id" => $school->id,
-                "student_id" => $student->id,
-                "direction" => $data["direction"],
-                "logged_at" => Carbon::parse($data["logged_at"]),
-                "gate_name" => $data["gate_name"] ?? null,
-                "source_ref" => null,
+                "gate_log_id" => $log->id,
+                "user_id" => $link->user_id,
+                "status" => "pending",
             ]);
         }
 
-        if ($log->wasRecentlyCreated) {
-            $parentLinks = ParentStudent::query()
-                ->where("school_id", $school->id)
-                ->where("student_id", $student->id)
-                ->get(["user_id"]);
-
-            foreach ($parentLinks as $link) {
-                NotificationDelivery::query()->create([
-                    "school_id" => $school->id,
-                    "gate_log_id" => $log->id,
-                    "user_id" => $link->user_id,
-                    "status" => "pending",
-                ]);
-            }
-
-            // Push immediately for fresh gate logs; scheduler remains as a retry path.
-            $processor->processPending($pushService, 200, (int) $log->id);
-        }
+        // Push immediately for fresh gate logs; scheduler remains as a retry path.
+        $processor->processPending($pushService, 200, (int) $log->id);
 
         return response()->json(["message" => "Gate log ingested.", "id" => $log->id], 201);
     }
