@@ -242,7 +242,7 @@ class GateLogController extends \App\Http\Controllers\Controller
             ]);
 
         if ($since) {
-            $query->where("gate_logs.logged_at", ">", Carbon::parse($since));
+            $query->where("gate_logs.logged_at", ">=", Carbon::parse($since));
         }
 
         return response()->json($query->get());
