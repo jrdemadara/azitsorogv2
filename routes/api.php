@@ -19,6 +19,12 @@ Route::prefix("gatelog")->group(function () {
     Route::post("/auth/register", [GateLogAuthController::class, "register"]);
     Route::post("/auth/otp/send", [GateLogAuthController::class, "sendOtp"]);
     Route::post("/auth/otp/verify", [GateLogAuthController::class, "verifyOtp"]);
+    Route::post("/auth/password/otp/send", [GateLogAuthController::class, "sendPasswordResetOtp"]);
+    Route::post("/auth/password/otp/verify", [
+        GateLogAuthController::class,
+        "verifyPasswordResetOtp",
+    ]);
+    Route::post("/auth/password/reset", [GateLogAuthController::class, "resetPassword"]);
     Route::post("/auth/login", [GateLogAuthController::class, "login"]);
     Route::post("/ingest/logs", [GateLogController::class, "ingestGateLog"]);
 
