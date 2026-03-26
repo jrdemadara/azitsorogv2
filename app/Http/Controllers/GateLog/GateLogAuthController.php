@@ -20,6 +20,15 @@ class GateLogAuthController extends \App\Http\Controllers\Controller
     public function register(Request $request)
     {
         try {
+            $requestId =
+                (string) ($request->header("X-Request-Id") ?: uniqid("gatelog-reg-", true));
+            Log::info("GateLog register request received", [
+                "request_id" => $requestId,
+                "email_raw" => (string) $request->input("email", ""),
+                "ip" => $request->ip(),
+                "user_agent" => (string) $request->userAgent(),
+            ]);
+
             $data = $request->validate([
                 "name" => ["required", "string", "max:255"],
                 "email" => ["required", "email", "max:255"],
@@ -33,6 +42,10 @@ class GateLogAuthController extends \App\Http\Controllers\Controller
                 ->first();
 
             if (!$allowed) {
+                Log::warning("GateLog register blocked: email not allowed", [
+                    "request_id" => $requestId,
+                    "email" => $email,
+                ]);
                 return response()->json(["message" => "Email is not allowed."], 422);
             }
 
@@ -41,6 +54,10 @@ class GateLogAuthController extends \App\Http\Controllers\Controller
                 ->first();
 
             if ($existing) {
+                Log::warning("GateLog register blocked: email already registered", [
+                    "request_id" => $requestId,
+                    "email" => $email,
+                ]);
                 return response()->json(["message" => "Email already registered."], 422);
             }
 
@@ -55,6 +72,10 @@ class GateLogAuthController extends \App\Http\Controllers\Controller
                 $this->issueOtp((int) $allowed->school_id, $user->id, $email);
             });
 
+            Log::info("GateLog register success", [
+                "request_id" => $requestId,
+                "email" => $email,
+            ]);
             return response()->json(
                 [
                     "message" => "Registered. OTP was generated and should be sent to email.",
@@ -62,7 +83,12 @@ class GateLogAuthController extends \App\Http\Controllers\Controller
                 201,
             );
         } catch (\Throwable $e) {
-            Log::error("GateLog register failed", ["error" => $e->getMessage()]);
+            Log::error("GateLog register failed", [
+                "error" => $e->getMessage(),
+                "email_raw" => (string) $request->input("email", ""),
+                "ip" => $request->ip(),
+                "user_agent" => (string) $request->userAgent(),
+            ]);
             return response()->json(["message" => "Registration failed. Please try again."], 500);
         }
     }
