@@ -6,6 +6,7 @@ use App\Models\Gatelog\GateLog;
 use App\Models\Gatelog\ParentDevice;
 use Kreait\Firebase\Exception\FirebaseException;
 use Kreait\Firebase\Exception\MessagingException;
+use Kreait\Firebase\Messaging\AndroidConfig;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
 use Kreait\Laravel\Firebase\Facades\Firebase;
@@ -22,6 +23,15 @@ class PushNotificationService
             $messaging = Firebase::messaging();
 
             $message = CloudMessage::withTarget("token", (string) $device->push_token)
+                ->withAndroidConfig(
+                    AndroidConfig::fromArray([
+                        "notification" => [
+                            // Must match a drawable resource name in the Android app.
+                            "icon" => "ic_notification",
+                            "color" => "#FFFFFF",
+                        ],
+                    ]),
+                )
                 ->withNotification(
                     Notification::create("New Gate Log", "A new gate activity is available."),
                 )
