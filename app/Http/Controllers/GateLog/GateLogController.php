@@ -68,7 +68,10 @@ class GateLogController extends \App\Http\Controllers\Controller
             "student_id" => $student->id,
         ]);
 
-        return response()->json(["message" => "Student linked successfully."]);
+        return response()->json([
+            "message" => "Student linked successfully.",
+            "student_name" => $student->full_name,
+        ]);
     }
 
     public function registerDevice(Request $request)
