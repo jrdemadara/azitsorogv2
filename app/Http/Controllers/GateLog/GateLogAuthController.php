@@ -183,6 +183,12 @@ class GateLogAuthController extends \App\Http\Controllers\Controller
             return response()->json([
                 "access_token" => $token,
                 "token_type" => "Bearer",
+                "user" => [
+                    "id" => $user->id,
+                    "school_id" => $user->school_id,
+                    "name" => $user->name,
+                    "email" => $user->email,
+                ],
             ]);
         } catch (\Throwable $e) {
             Log::error("GateLog login failed", ["error" => $e->getMessage()]);
