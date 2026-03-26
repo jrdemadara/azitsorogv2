@@ -17,49 +17,91 @@ class GatelogSeeder extends Seeder
             // Schools
             $schoolA = School::query()->updateOrCreate(
                 ["code" => "ABC"],
-                ["name" => "ABC International School", "is_active" => true],
+                ["name" => "Manila Science High School", "is_active" => true],
             );
 
             $schoolB = School::query()->updateOrCreate(
                 ["code" => "XYZ"],
-                ["name" => "XYZ Science High", "is_active" => true],
+                ["name" => "Ramon Magsaysay High School", "is_active" => true],
             );
 
-            // Allowed emails (ABC school)
+            $schoolC = School::query()->updateOrCreate(
+                ["code" => "LMN"],
+                ["name" => "Araullo High School", "is_active" => true],
+            );
+
+            // Allowed emails (all schools)
             $allowed = [
                 ["owner_name" => "Johnny Demadara", "email" => "jrdemadara@protonmail.com"],
                 ["owner_name" => "Azitsorog Inc Admin", "email" => "azitsoroginc@gmail.com"],
-                ["owner_name" => "Azitsorog Inc Support", "email" => "azitsoroginc@yahoo.com"],
             ];
 
-            foreach ($allowed as $entry) {
-                AllowedEmail::query()->updateOrCreate(
-                    ["school_id" => $schoolA->id, "email" => $entry["email"]],
-                    ["owner_name" => $entry["owner_name"], "is_used" => false],
-                );
+            foreach ([$schoolA, $schoolB, $schoolC] as $school) {
+                foreach ($allowed as $entry) {
+                    AllowedEmail::query()->updateOrCreate(
+                        ["school_id" => $school->id, "email" => $entry["email"]],
+                        ["owner_name" => $entry["owner_name"], "is_used" => false],
+                    );
+                }
             }
 
-            // Students (demonstrate same ID number in different schools)
+            // Students (3 per school; demonstrates same student_id_number across schools)
             $studentA1 = Student::query()->updateOrCreate(
                 ["school_id" => $schoolA->id, "student_id_number" => "123"],
-                ["full_name" => "Student A One", "is_active" => true],
-            );
-
-            $studentB1 = Student::query()->updateOrCreate(
-                ["school_id" => $schoolB->id, "student_id_number" => "123"],
-                ["full_name" => "Student B One", "is_active" => true],
+                ["full_name" => "Ethan Reyes", "is_active" => true],
             );
 
             $studentA2 = Student::query()->updateOrCreate(
                 ["school_id" => $schoolA->id, "student_id_number" => "456"],
-                ["full_name" => "Student A Two", "is_active" => true],
+                ["full_name" => "Liam Santos", "is_active" => true],
+            );
+
+            $studentA3 = Student::query()->updateOrCreate(
+                ["school_id" => $schoolA->id, "student_id_number" => "789"],
+                ["full_name" => "Noah Garcia", "is_active" => true],
+            );
+
+            $studentB1 = Student::query()->updateOrCreate(
+                ["school_id" => $schoolB->id, "student_id_number" => "123"],
+                ["full_name" => "Ava Cruz", "is_active" => true],
+            );
+
+            $studentB2 = Student::query()->updateOrCreate(
+                ["school_id" => $schoolB->id, "student_id_number" => "456"],
+                ["full_name" => "Mia Flores", "is_active" => true],
+            );
+
+            $studentB3 = Student::query()->updateOrCreate(
+                ["school_id" => $schoolB->id, "student_id_number" => "789"],
+                ["full_name" => "Lucas Mendoza", "is_active" => true],
+            );
+
+            $studentC1 = Student::query()->updateOrCreate(
+                ["school_id" => $schoolC->id, "student_id_number" => "123"],
+                ["full_name" => "Sophia Torres", "is_active" => true],
+            );
+
+            $studentC2 = Student::query()->updateOrCreate(
+                ["school_id" => $schoolC->id, "student_id_number" => "456"],
+                ["full_name" => "Isabella Ramos", "is_active" => true],
+            );
+
+            $studentC3 = Student::query()->updateOrCreate(
+                ["school_id" => $schoolC->id, "student_id_number" => "789"],
+                ["full_name" => "Daniel Navarro", "is_active" => true],
             );
 
             // Map emails to students they are allowed to link
             $authorizations = [
                 [$schoolA->id, $studentA1->id, "jrdemadara@protonmail.com"],
                 [$schoolA->id, $studentA2->id, "azitsoroginc@gmail.com"],
-                [$schoolB->id, $studentB1->id, "azitsoroginc@yahoo.com"],
+                [$schoolA->id, $studentA3->id, "jrdemadara@protonmail.com"],
+                [$schoolB->id, $studentB1->id, "jrdemadara@protonmail.com"],
+                [$schoolB->id, $studentB2->id, "azitsoroginc@gmail.com"],
+                [$schoolB->id, $studentB3->id, "jrdemadara@protonmail.com"],
+                [$schoolC->id, $studentC1->id, "azitsoroginc@gmail.com"],
+                [$schoolC->id, $studentC2->id, "jrdemadara@protonmail.com"],
+                [$schoolC->id, $studentC3->id, "azitsoroginc@gmail.com"],
             ];
 
             foreach ($authorizations as [$schoolId, $studentId, $email]) {
