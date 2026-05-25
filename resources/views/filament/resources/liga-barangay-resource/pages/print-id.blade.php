@@ -30,10 +30,23 @@
             overflow: hidden;
             font-family: 'Galvji', Arial, sans-serif;
             color: #101010;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
             border: 1px solid #d8d8d8;
+        }
+
+        .id-card-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .id-card > :not(.id-card-bg) {
+            position: relative;
+            z-index: 1;
         }
 
         .front .photo {
@@ -121,6 +134,10 @@
 
         @media print {
             @page { size: auto; margin: 0; }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
             body * { visibility: hidden; }
             .id-print-wrapper, .id-print-wrapper * { visibility: visible; }
             .id-print-wrapper { position: absolute; left: 0; top: 0; }
@@ -141,7 +158,8 @@
             </div>
         @endif
 
-        <div class="id-card front" style="background-image: url('{{ $frontBg }}')">
+        <div class="id-card front">
+            <img class="id-card-bg" src="{{ $frontBg }}" alt="ID Front Background">
             @if($this->photoDataUri)
                 <img class="photo" src="{{ $this->photoDataUri }}" alt="Photo">
             @else
@@ -189,7 +207,8 @@
             <div class="signature-label">Signature</div>
         </div>
 
-        <div class="id-card back" style="background-image: url('{{ $backBg }}')">
+        <div class="id-card back">
+            <img class="id-card-bg" src="{{ $backBg }}" alt="ID Back Background">
             <div class="emergency">
                 <div style="font-size: 22px; font-weight: 700;">EMERGENCY CONTACT</div>
                 <div style="font-size: 31px;">{{ $this->titleCase($record->emergency_contact_person) }}</div>
