@@ -71,12 +71,13 @@
         .front .signature-label {
             position: absolute;
             left: 36px;
-            top: 536px;
+            top: 520px;
             width: 278px;
             text-align: center;
             font-size: 15px;
-            color: #2a2a2a;
-            font-weight: 600;
+            color: #1f1f1f;
+            font-weight: 700;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.85);
         }
 
         .front .field {
