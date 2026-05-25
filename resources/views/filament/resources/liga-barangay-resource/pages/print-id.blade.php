@@ -78,16 +78,16 @@
         }
 
         .front .name { left: 338px; top: 160px; width: 604px; }
-        .front .position { left: 338px; top: 232px; width: 290px; }
-        .front .idno { left: 650px; top: 232px; width: 200px; }
-        .front .barangay { left: 338px; top: 288px; width: 290px; }
-        .front .city { left: 650px; top: 288px; width: 290px; }
-        .front .region { left: 338px; top: 345px; width: 290px; }
-        .front .province { left: 650px; top: 345px; width: 290px; }
-        .front .address { left: 338px; top: 403px; width: 405px; }
-        .front .validity { left: 338px; top: 493px; width: 430px; }
-        .front .birthdate { left: 338px; top: 552px; width: 240px; }
-        .front .gender { left: 650px; top: 552px; width: 240px; }
+        .front .position { left: 338px; top: 226px; width: 290px; }
+        .front .idno { left: 650px; top: 226px; width: 200px; }
+        .front .barangay { left: 338px; top: 278px; width: 290px; }
+        .front .city { left: 650px; top: 278px; width: 290px; }
+        .front .region { left: 338px; top: 330px; width: 290px; }
+        .front .province { left: 650px; top: 330px; width: 290px; }
+        .front .address { left: 338px; top: 382px; width: 405px; }
+        .front .validity { left: 338px; top: 465px; width: 430px; }
+        .front .birthdate { left: 338px; top: 518px; width: 240px; }
+        .front .gender { left: 650px; top: 518px; width: 240px; }
 
         .front .qr {
             position: absolute;
@@ -185,8 +185,8 @@
         <div class="id-card back" style="background-image: url('{{ $backBg }}')">
             <div class="emergency">
                 <div style="font-size: 22px; font-weight: 700;">EMERGENCY CONTACT</div>
-                <div style="font-size: 34px;">{{ $this->titleCase($record->emergency_contact_person) }}</div>
-                <div style="font-size: 36px;">{{ $this->normalizePhone($record->emergency_contact_number) }}</div>
+                <div style="font-size: 31px;">{{ $this->titleCase($record->emergency_contact_person) }}</div>
+                <div style="font-size: 33px;">{{ $this->normalizePhone($record->emergency_contact_number) }}</div>
             </div>
         </div>
     </div>
