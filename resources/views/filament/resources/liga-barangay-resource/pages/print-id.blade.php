@@ -84,7 +84,7 @@
         .front .city { left: 650px; top: 288px; width: 290px; }
         .front .region { left: 338px; top: 345px; width: 290px; }
         .front .province { left: 650px; top: 345px; width: 290px; }
-        .front .address { left: 338px; top: 403px; width: 590px; }
+        .front .address { left: 338px; top: 403px; width: 405px; }
         .front .validity { left: 338px; top: 493px; width: 430px; }
         .front .birthdate { left: 338px; top: 552px; width: 240px; }
         .front .gender { left: 650px; top: 552px; width: 240px; }
@@ -168,7 +168,12 @@
             <div class="field city"><div style="font-size: 16px; color: #2a2a2a;">Municipality/City</div><div style="font-size:{{ $this->placeFontSize($record->city) }}px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->city) }}</div></div>
             <div class="field region"><div style="font-size: 16px; color: #2a2a2a;">Region</div><div style="font-size:{{ $this->placeFontSize($record->region) }}px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->region) }}</div></div>
             <div class="field province"><div style="font-size: 16px; color: #2a2a2a;">Province</div><div style="font-size:{{ $this->placeFontSize($record->province) }}px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->province) }}</div></div>
-            <div class="field address"><div style="font-size: 16px; color: #2a2a2a;">Address</div><div style="font-size: {{ $this->addressFontSize($record->home_address) }}px; font-weight:700; line-height:1.18;">{{ $this->titleCase($record->home_address) }}</div></div>
+            <div class="field address">
+                <div style="font-size: 16px; color: #2a2a2a;">Address</div>
+                <div style="font-size: {{ $this->addressFontSize($record->home_address) }}px; font-weight:700; line-height:1.18; overflow-wrap:anywhere; word-break:break-word; max-height:78px; overflow:hidden;">
+                    {{ $this->titleCase($record->home_address) }}
+                </div>
+            </div>
             <div class="field validity"><div style="font-size: 16px; color: #2a2a2a;">Validity Period</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->validityPeriod() }}</div></div>
             <div class="field birthdate"><div style="font-size: 16px; color: #2a2a2a;">Date of Birth</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->birthdate() }}</div></div>
             <div class="field gender"><div style="font-size: 16px; color: #2a2a2a;">Gender</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->gender) }}</div></div>

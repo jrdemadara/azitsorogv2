@@ -105,16 +105,24 @@ class PrintLigaBarangayId extends Page
         $address = trim((string) $address);
         $length = mb_strlen($address);
 
+        if ($length > 120) {
+            return 12;
+        }
+
+        if ($length > 95) {
+            return 13;
+        }
+
         if ($length > 90) {
-            return 15;
+            return 14;
         }
 
         if ($length > 70) {
-            return 17;
+            return 15;
         }
 
         if ($length > 50) {
-            return 19;
+            return 17;
         }
 
         return 20;
