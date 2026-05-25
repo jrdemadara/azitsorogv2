@@ -89,14 +89,26 @@ class PrintLigaBarangayId extends Page
     private function loadPrivateImageAsDataUri(string $relativePath): string
     {
         $disk = Storage::disk('external_storage');
-        $path = 'private/' . ltrim($relativePath, '/');
+        $relativePath = ltrim($relativePath, '/');
+        $candidates = [
+            $relativePath,
+            'private/' . $relativePath,
+        ];
 
-        if (!$disk->exists($path)) {
+        $foundPath = null;
+        foreach ($candidates as $candidate) {
+            if ($disk->exists($candidate)) {
+                $foundPath = $candidate;
+                break;
+            }
+        }
+
+        if (!$foundPath) {
             return '';
         }
 
-        $bytes = $disk->get($path);
-        $mime = $this->mimeTypeFromPath($path);
+        $bytes = $disk->get($foundPath);
+        $mime = $this->mimeTypeFromPath($foundPath);
 
         return 'data:' . $mime . ';base64,' . base64_encode($bytes);
     }
