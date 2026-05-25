@@ -22,7 +22,12 @@ class PrintLigaBarangayId extends Page
 
     public function mount($record): void
     {
-        $this->record = LigaBarangay::findOrFail($record);
+        $this->record = LigaBarangay::query()
+            ->whereKey($record)
+            ->firstOr(function () use ($record) {
+                abort(404, "LigaBarangay record {$record} not found on pgsql_lnb.profiles.");
+            });
+
         $this->photoDataUri = $this->loadPrivateImageAsDataUri('profiles/' . ltrim((string) $this->record->photo, '/'));
         $this->signatureDataUri = $this->loadPrivateImageAsDataUri('signatures/' . ltrim((string) $this->record->signature, '/'));
     }
