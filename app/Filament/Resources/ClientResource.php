@@ -17,6 +17,14 @@ class ClientResource extends Resource
     protected static ?string $navigationIcon = "heroicon-o-user-group";
     protected static ?string $navigationGroup = "Management";
     protected static ?int $navigationSort = 4;
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+
+        return $user?->isAdmin() ?? false;
+    }
+
     public static function form(Form $form): Form
     {
         return $form->schema([

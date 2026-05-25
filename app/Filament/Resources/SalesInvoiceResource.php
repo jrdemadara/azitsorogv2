@@ -20,6 +20,13 @@ class SalesInvoiceResource extends Resource
     protected static ?string $navigationLabel = 'Sales Invoices';
     protected static ?string $navigationIcon  = 'heroicon-o-document-duplicate';
     protected static ?int $navigationSort     = 3;
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+
+        return $user?->isAdmin() ?? false;
+    }
     
     public static function shouldRegisterNavigation(): bool
     {

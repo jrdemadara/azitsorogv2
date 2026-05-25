@@ -22,6 +22,11 @@ class PrintLigaBarangayId extends Page
 
     public function mount($record): void
     {
+        $user = auth()->user();
+        if (!$user || (!$user->isAdmin() && !$user->isLigaPrinter())) {
+            abort(403, 'Unauthorized to print Liga Barangay IDs.');
+        }
+
         $this->record = LigaBarangay::query()
             ->whereKey($record)
             ->firstOr(function () use ($record) {

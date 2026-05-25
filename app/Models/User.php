@@ -14,9 +14,12 @@ class User extends Authenticatable implements FilamentUser
 {
     protected $connection = "pgsql";
 
+    public const ROLE_ADMIN = "admin";
+    public const ROLE_LIGA_PRINTER = "liga_printer";
+
     public function canAccessPanel(Panel $panel): bool
     {
-        return true;
+        return in_array($this->role, [self::ROLE_ADMIN, self::ROLE_LIGA_PRINTER], true);
     }
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasApiTokens;
@@ -26,7 +29,7 @@ class User extends Authenticatable implements FilamentUser
      *
      * @var list<string>
      */
-    protected $fillable = ["name", "email", "password"];
+    protected $fillable = ["name", "email", "password", "role"];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,5 +49,15 @@ class User extends Authenticatable implements FilamentUser
             "email_verified_at" => "datetime",
             "password" => "hashed",
         ];
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isLigaPrinter(): bool
+    {
+        return $this->role === self::ROLE_LIGA_PRINTER;
     }
 }

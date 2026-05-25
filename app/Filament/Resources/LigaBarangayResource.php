@@ -39,6 +39,13 @@ class LigaBarangayResource extends Resource
         return false;
     }
 
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+
+        return $user?->isAdmin() || $user?->isLigaPrinter();
+    }
+
     public static function form(Form $form): Form
     {
         return $form->schema([

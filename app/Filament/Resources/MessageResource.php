@@ -26,6 +26,13 @@ class MessageResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Messages';
 
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+
+        return $user?->isAdmin() ?? false;
+    }
+
     public static function form(Form $form): Form
     {
         return $form
