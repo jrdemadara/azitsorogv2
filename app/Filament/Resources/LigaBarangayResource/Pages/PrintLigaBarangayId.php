@@ -40,8 +40,7 @@ class PrintLigaBarangayId extends Page
         $this->photoDataUri = $this->loadPrivateImageAsDataUri('profiles/' . ltrim((string) $this->record->photo, '/'), $this->photoResolvedPath);
         $this->signatureDataUri = $this->loadPrivateImageAsDataUri(
             'signatures/' . ltrim((string) $this->record->signature, '/'),
-            $this->signatureResolvedPath,
-            true
+            $this->signatureResolvedPath
         );
     }
 
