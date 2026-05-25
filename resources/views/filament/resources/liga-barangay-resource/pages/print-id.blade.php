@@ -61,18 +61,18 @@
 
         .front .signature {
             position: absolute;
-            left: 44px;
-            top: 444px;
-            width: 262px;
-            height: 90px;
+            left: 36px;
+            top: 434px;
+            width: 278px;
+            height: 106px;
             object-fit: contain;
         }
 
         .front .signature-label {
             position: absolute;
-            left: 44px;
-            top: 529px;
-            width: 262px;
+            left: 36px;
+            top: 536px;
+            width: 278px;
             text-align: center;
             font-size: 15px;
             color: #2a2a2a;
