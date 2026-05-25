@@ -38,7 +38,7 @@
         .front .photo {
             position: absolute;
             left: 56px;
-            top: 188px;
+            top: 170px;
             width: 238px;
             height: 268px;
             object-fit: cover;
@@ -47,18 +47,18 @@
 
         .front .signature {
             position: absolute;
-            left: 64px;
-            top: 472px;
-            width: 220px;
-            height: 56px;
+            left: 52px;
+            top: 454px;
+            width: 246px;
+            height: 74px;
             object-fit: contain;
         }
 
         .front .signature-label {
             position: absolute;
-            left: 64px;
-            top: 532px;
-            width: 220px;
+            left: 52px;
+            top: 535px;
+            width: 246px;
             text-align: center;
             font-size: 15px;
             color: #2a2a2a;
@@ -110,7 +110,7 @@
             top: 410px;
             width: 640px;
             text-align: center;
-            font-size: 34px;
+            font-size: 28px;
             line-height: 1.15;
         }
 
@@ -168,7 +168,7 @@
             <div class="field city"><div style="font-size: 16px; color: #2a2a2a;">Municipality/City</div><div style="font-size:20px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->city) }}</div></div>
             <div class="field region"><div style="font-size: 16px; color: #2a2a2a;">Region</div><div style="font-size:20px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->region) }}</div></div>
             <div class="field province"><div style="font-size: 16px; color: #2a2a2a;">Province</div><div style="font-size:20px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->province) }}</div></div>
-            <div class="field address"><div style="font-size: 16px; color: #2a2a2a;">Address</div><div style="font-size: 20px; font-weight:700; line-height:1.18;">{{ $this->titleCase($record->home_address) }}</div></div>
+            <div class="field address"><div style="font-size: 16px; color: #2a2a2a;">Address</div><div style="font-size: {{ $this->addressFontSize($record->home_address) }}px; font-weight:700; line-height:1.18;">{{ $this->titleCase($record->home_address) }}</div></div>
             <div class="field validity"><div style="font-size: 16px; color: #2a2a2a;">Validity Period</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->validityPeriod() }}</div></div>
             <div class="field birthdate"><div style="font-size: 16px; color: #2a2a2a;">Date of Birth</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->birthdate() }}</div></div>
             <div class="field gender"><div style="font-size: 16px; color: #2a2a2a;">Gender</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->gender) }}</div></div>
@@ -179,9 +179,9 @@
 
         <div class="id-card back" style="background-image: url('{{ $backBg }}')">
             <div class="emergency">
-                <div style="font-size: 24px; font-weight: 700;">EMERGENCY CONTACT</div>
-                <div style="font-size: 40px;">{{ $this->titleCase($record->emergency_contact_person) }}</div>
-                <div style="font-size: 44px;">{{ $record->emergency_contact_number ?: 'N/A' }}</div>
+                <div style="font-size: 22px; font-weight: 700;">EMERGENCY CONTACT</div>
+                <div style="font-size: 34px;">{{ $this->titleCase($record->emergency_contact_person) }}</div>
+                <div style="font-size: 36px;">{{ $this->normalizePhone($record->emergency_contact_number) }}</div>
             </div>
         </div>
     </div>

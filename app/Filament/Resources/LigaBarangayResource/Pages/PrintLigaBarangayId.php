@@ -100,6 +100,47 @@ class PrintLigaBarangayId extends Page
         return mb_convert_case(mb_strtolower($value), MB_CASE_TITLE, 'UTF-8');
     }
 
+    public function addressFontSize(?string $address): int
+    {
+        $address = trim((string) $address);
+        $length = mb_strlen($address);
+
+        if ($length > 90) {
+            return 15;
+        }
+
+        if ($length > 70) {
+            return 17;
+        }
+
+        if ($length > 50) {
+            return 19;
+        }
+
+        return 20;
+    }
+
+    public function normalizePhone(?string $phone): string
+    {
+        $digits = preg_replace('/\D+/', '', (string) $phone);
+
+        if ($digits === '') {
+            return 'N/A';
+        }
+
+        if (str_starts_with($digits, '63') && strlen($digits) === 12) {
+            $digits = '0' . substr($digits, 2);
+        } elseif (str_starts_with($digits, '9') && strlen($digits) === 10) {
+            $digits = '0' . $digits;
+        }
+
+        if (strlen($digits) === 11 && str_starts_with($digits, '09')) {
+            return substr($digits, 0, 4) . '-' . substr($digits, 4, 3) . '-' . substr($digits, 7, 4);
+        }
+
+        return (string) $phone;
+    }
+
     private function loadPrivateImageAsDataUri(string $relativePath, string &$resolvedPath = ''): string
     {
         $disk = Storage::disk('external_storage');
