@@ -6,6 +6,7 @@ use App\Filament\Resources\LigaBarangayResource;
 use App\Models\LigaBarangay;
 use Filament\Actions;
 use Filament\Resources\Pages\Page;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 
 class PrintLigaBarangayId extends Page
@@ -19,6 +20,8 @@ class PrintLigaBarangayId extends Page
     public string $photoDataUri = '';
 
     public string $signatureDataUri = '';
+    public string $photoResolvedPath = '';
+    public string $signatureResolvedPath = '';
 
     public function mount($record): void
     {
@@ -33,8 +36,8 @@ class PrintLigaBarangayId extends Page
                 abort(404, "LigaBarangay record {$record} not found on pgsql_lnb.profiles.");
             });
 
-        $this->photoDataUri = $this->loadPrivateImageAsDataUri('profiles/' . ltrim((string) $this->record->photo, '/'));
-        $this->signatureDataUri = $this->loadPrivateImageAsDataUri('signatures/' . ltrim((string) $this->record->signature, '/'));
+        $this->photoDataUri = $this->loadPrivateImageAsDataUri('profiles/' . ltrim((string) $this->record->photo, '/'), $this->photoResolvedPath);
+        $this->signatureDataUri = $this->loadPrivateImageAsDataUri('signatures/' . ltrim((string) $this->record->signature, '/'), $this->signatureResolvedPath);
     }
 
     protected function getHeaderActions(): array
@@ -86,7 +89,7 @@ class PrintLigaBarangayId extends Page
         return trim($year . ' - ' . $term);
     }
 
-    private function loadPrivateImageAsDataUri(string $relativePath): string
+    private function loadPrivateImageAsDataUri(string $relativePath, string &$resolvedPath = ''): string
     {
         $disk = Storage::disk('external_storage');
         $relativePath = ltrim($relativePath, '/');
@@ -104,13 +107,20 @@ class PrintLigaBarangayId extends Page
         }
 
         if (!$foundPath) {
+            $resolvedPath = '[missing] ' . implode(' OR ', $candidates);
             return '';
         }
+        $resolvedPath = $foundPath;
 
         $bytes = $disk->get($foundPath);
         $mime = $this->mimeTypeFromPath($foundPath);
 
         return 'data:' . $mime . ';base64,' . base64_encode($bytes);
+    }
+
+    public function shouldShowDebugInfo(): bool
+    {
+        return App::isLocal() || config('app.debug');
     }
 
     private function mimeTypeFromPath(string $path): string

@@ -1,4 +1,7 @@
 <x-filament-panels::page>
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     @php
         $frontBg = asset('images/LNB_Brgy_ID_Front_Format.png');
         $backBg = asset('images/LNB_Brgy_ID_Back_Format.png');
@@ -137,6 +140,18 @@
     </style>
 
     <div class="id-print-wrapper" x-data x-on:print-page.window="window.print()">
+        @if($this->shouldShowDebugInfo())
+            <div style="font-size:12px; background:#fffbe6; border:1px solid #e7d58a; padding:8px; margin-bottom:8px;">
+                <strong>Debug:</strong><br>
+                Photo DB value: {{ $record->photo ?: '[empty]' }}<br>
+                Signature DB value: {{ $record->signature ?: '[empty]' }}<br>
+                Photo resolved path: {{ $this->photoResolvedPath ?: '[none]' }}<br>
+                Signature resolved path: {{ $this->signatureResolvedPath ?: '[none]' }}<br>
+                Photo loaded: {{ $this->photoDataUri ? 'yes' : 'no' }}<br>
+                Signature loaded: {{ $this->signatureDataUri ? 'yes' : 'no' }}
+            </div>
+        @endif
+
         <div class="id-card front" style="background-image: url('{{ $frontBg }}')">
             @if($this->photoDataUri)
                 <img class="photo" src="{{ $this->photoDataUri }}" alt="Photo">
