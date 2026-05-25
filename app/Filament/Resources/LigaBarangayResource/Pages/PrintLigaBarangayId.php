@@ -120,6 +120,26 @@ class PrintLigaBarangayId extends Page
         return 20;
     }
 
+    public function placeFontSize(?string $value): int
+    {
+        $value = trim((string) $value);
+        $length = mb_strlen($value);
+
+        if ($length > 52) {
+            return 14;
+        }
+
+        if ($length > 38) {
+            return 16;
+        }
+
+        if ($length > 26) {
+            return 18;
+        }
+
+        return 21;
+    }
+
     public function normalizePhone(?string $phone): string
     {
         $digits = preg_replace('/\D+/', '', (string) $phone);

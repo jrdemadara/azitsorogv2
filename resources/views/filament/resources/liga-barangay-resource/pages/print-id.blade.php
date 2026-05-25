@@ -47,18 +47,18 @@
 
         .front .signature {
             position: absolute;
-            left: 52px;
-            top: 454px;
-            width: 246px;
-            height: 74px;
+            left: 44px;
+            top: 444px;
+            width: 262px;
+            height: 90px;
             object-fit: contain;
         }
 
         .front .signature-label {
             position: absolute;
-            left: 52px;
-            top: 535px;
-            width: 246px;
+            left: 44px;
+            top: 529px;
+            width: 262px;
             text-align: center;
             font-size: 15px;
             color: #2a2a2a;
@@ -164,10 +164,10 @@
                 <div style="font-size: 21px; font-weight: 700; line-height:1.05;">{{ $record->id }}</div>
             </div>
 
-            <div class="field barangay"><div style="font-size: 16px; color: #2a2a2a;">Barangay</div><div style="font-size:20px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->barangay) }}</div></div>
-            <div class="field city"><div style="font-size: 16px; color: #2a2a2a;">Municipality/City</div><div style="font-size:20px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->city) }}</div></div>
-            <div class="field region"><div style="font-size: 16px; color: #2a2a2a;">Region</div><div style="font-size:20px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->region) }}</div></div>
-            <div class="field province"><div style="font-size: 16px; color: #2a2a2a;">Province</div><div style="font-size:20px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->province) }}</div></div>
+            <div class="field barangay"><div style="font-size: 16px; color: #2a2a2a;">Barangay</div><div style="font-size:{{ $this->placeFontSize($record->barangay) }}px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->barangay) }}</div></div>
+            <div class="field city"><div style="font-size: 16px; color: #2a2a2a;">Municipality/City</div><div style="font-size:{{ $this->placeFontSize($record->city) }}px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->city) }}</div></div>
+            <div class="field region"><div style="font-size: 16px; color: #2a2a2a;">Region</div><div style="font-size:{{ $this->placeFontSize($record->region) }}px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->region) }}</div></div>
+            <div class="field province"><div style="font-size: 16px; color: #2a2a2a;">Province</div><div style="font-size:{{ $this->placeFontSize($record->province) }}px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->province) }}</div></div>
             <div class="field address"><div style="font-size: 16px; color: #2a2a2a;">Address</div><div style="font-size: {{ $this->addressFontSize($record->home_address) }}px; font-weight:700; line-height:1.18;">{{ $this->titleCase($record->home_address) }}</div></div>
             <div class="field validity"><div style="font-size: 16px; color: #2a2a2a;">Validity Period</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->validityPeriod() }}</div></div>
             <div class="field birthdate"><div style="font-size: 16px; color: #2a2a2a;">Date of Birth</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->birthdate() }}</div></div>
