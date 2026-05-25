@@ -38,7 +38,11 @@ class PrintLigaBarangayId extends Page
             });
 
         $this->photoDataUri = $this->loadPrivateImageAsDataUri('profiles/' . ltrim((string) $this->record->photo, '/'), $this->photoResolvedPath);
-        $this->signatureDataUri = $this->loadPrivateImageAsDataUri('signatures/' . ltrim((string) $this->record->signature, '/'), $this->signatureResolvedPath);
+        $this->signatureDataUri = $this->loadPrivateImageAsDataUri(
+            'signatures/' . ltrim((string) $this->record->signature, '/'),
+            $this->signatureResolvedPath,
+            true
+        );
     }
 
     protected function getHeaderActions(): array
@@ -169,7 +173,11 @@ class PrintLigaBarangayId extends Page
         return (string) $phone;
     }
 
-    private function loadPrivateImageAsDataUri(string $relativePath, string &$resolvedPath = ''): string
+    private function loadPrivateImageAsDataUri(
+        string $relativePath,
+        string &$resolvedPath = '',
+        bool $cleanSignatureBackground = false
+    ): string
     {
         $disk = Storage::disk('external_storage');
         $relativePath = ltrim($relativePath, '/');
@@ -205,6 +213,14 @@ class PrintLigaBarangayId extends Page
         ]);
 
         $bytes = $disk->get($foundPath);
+
+        if ($cleanSignatureBackground) {
+            $cleaned = $this->stripLightBackgroundToTransparentPng($bytes);
+            if ($cleaned !== null) {
+                return 'data:image/png;base64,' . base64_encode($cleaned);
+            }
+        }
+
         $mime = $this->mimeTypeFromPath($foundPath);
 
         return 'data:' . $mime . ';base64,' . base64_encode($bytes);
@@ -225,5 +241,58 @@ class PrintLigaBarangayId extends Page
             'webp' => 'image/webp',
             default => 'image/jpeg',
         };
+    }
+
+    private function stripLightBackgroundToTransparentPng(string $bytes): ?string
+    {
+        if (!function_exists('imagecreatefromstring')) {
+            return null;
+        }
+
+        $src = @imagecreatefromstring($bytes);
+        if ($src === false) {
+            return null;
+        }
+
+        $width = imagesx($src);
+        $height = imagesy($src);
+        $dst = imagecreatetruecolor($width, $height);
+        imagealphablending($dst, false);
+        imagesavealpha($dst, true);
+
+        $transparent = imagecolorallocatealpha($dst, 255, 255, 255, 127);
+        imagefill($dst, 0, 0, $transparent);
+
+        // Threshold tune: higher keeps more strokes, lower removes more paper noise.
+        $threshold = 215;
+
+        for ($y = 0; $y < $height; $y++) {
+            for ($x = 0; $x < $width; $x++) {
+                $rgb = imagecolorat($src, $x, $y);
+                $r = ($rgb >> 16) & 0xFF;
+                $g = ($rgb >> 8) & 0xFF;
+                $b = $rgb & 0xFF;
+                $luma = (int) (0.299 * $r + 0.587 * $g + 0.114 * $b);
+
+                if ($luma >= $threshold) {
+                    imagesetpixel($dst, $x, $y, $transparent);
+                } else {
+                    // Normalize strokes to dark ink while preserving anti-aliased edges.
+                    $ink = max(0, min(255, (int) ($luma * 0.45)));
+                    $alpha = max(0, min(127, (int) (($luma / $threshold) * 40)));
+                    $color = imagecolorallocatealpha($dst, $ink, $ink, $ink, $alpha);
+                    imagesetpixel($dst, $x, $y, $color);
+                }
+            }
+        }
+
+        ob_start();
+        imagepng($dst);
+        $png = ob_get_clean();
+
+        imagedestroy($src);
+        imagedestroy($dst);
+
+        return is_string($png) ? $png : null;
     }
 }
