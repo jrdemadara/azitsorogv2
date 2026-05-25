@@ -256,6 +256,13 @@ class PrintLigaBarangayId extends Page
 
         $width = imagesx($src);
         $height = imagesy($src);
+
+        // If image already has meaningful transparency, keep original to avoid inversion artifacts.
+        if ($this->hasExistingTransparency($src, $width, $height)) {
+            imagedestroy($src);
+            return $bytes;
+        }
+
         $dst = imagecreatetruecolor($width, $height);
         imagealphablending($dst, false);
         imagesavealpha($dst, true);
@@ -263,8 +270,8 @@ class PrintLigaBarangayId extends Page
         $transparent = imagecolorallocatealpha($dst, 255, 255, 255, 127);
         imagefill($dst, 0, 0, $transparent);
 
-        // Threshold tune: higher keeps more strokes, lower removes more paper noise.
-        $threshold = 215;
+        // Threshold tune: lower removes less paper noise, higher removes more.
+        $threshold = 230;
 
         for ($y = 0; $y < $height; $y++) {
             for ($x = 0; $x < $width; $x++) {
@@ -277,10 +284,9 @@ class PrintLigaBarangayId extends Page
                 if ($luma >= $threshold) {
                     imagesetpixel($dst, $x, $y, $transparent);
                 } else {
-                    // Normalize strokes to dark ink while preserving anti-aliased edges.
-                    $ink = max(0, min(255, (int) ($luma * 0.45)));
-                    $alpha = max(0, min(127, (int) (($luma / $threshold) * 40)));
-                    $color = imagecolorallocatealpha($dst, $ink, $ink, $ink, $alpha);
+                    // Preserve original stroke color and only adjust alpha based on brightness.
+                    $alpha = max(0, min(127, (int) (($luma / $threshold) * 28)));
+                    $color = imagecolorallocatealpha($dst, $r, $g, $b, $alpha);
                     imagesetpixel($dst, $x, $y, $color);
                 }
             }
@@ -294,5 +300,30 @@ class PrintLigaBarangayId extends Page
         imagedestroy($dst);
 
         return is_string($png) ? $png : null;
+    }
+
+    private function hasExistingTransparency($img, int $width, int $height): bool
+    {
+        $sampleStepX = max(1, (int) floor($width / 80));
+        $sampleStepY = max(1, (int) floor($height / 80));
+        $transparentCount = 0;
+        $sampleCount = 0;
+
+        for ($y = 0; $y < $height; $y += $sampleStepY) {
+            for ($x = 0; $x < $width; $x += $sampleStepX) {
+                $sampleCount++;
+                $rgba = imagecolorat($img, $x, $y);
+                $alpha = ($rgba & 0x7F000000) >> 24;
+                if ($alpha > 0) {
+                    $transparentCount++;
+                }
+            }
+        }
+
+        if ($sampleCount === 0) {
+            return false;
+        }
+
+        return ($transparentCount / $sampleCount) > 0.03;
     }
 }
