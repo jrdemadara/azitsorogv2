@@ -77,7 +77,16 @@ class LigaBarangayResource extends Resource
                 //
             ])
             ->actions([
-                //Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make("print_id")
+                    ->label("Print ID")
+                    ->icon("heroicon-o-printer")
+                    ->color("primary")
+                    ->url(
+                        fn(LigaBarangay $record): string => static::getUrl("print-id", [
+                            "record" => $record,
+                        ]),
+                    )
+                    ->openUrlInNewTab(),
             ])
             ->headerActions([
                 Tables\Actions\Action::make("Download")
@@ -113,6 +122,7 @@ class LigaBarangayResource extends Resource
             "index" => Pages\ListLigaBarangays::route("/"),
             "create" => Pages\CreateLigaBarangay::route("/create"),
             "edit" => Pages\EditLigaBarangay::route("/{record}/edit"),
+            "print-id" => Pages\PrintLigaBarangayId::route("/{record}/print-id"),
         ];
     }
 
