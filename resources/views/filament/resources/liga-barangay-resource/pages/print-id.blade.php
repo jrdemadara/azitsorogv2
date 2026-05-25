@@ -93,13 +93,13 @@
         .front .qr {
             position: absolute;
             left: 764px;
-            top: 424px;
+            top: 382px;
             width: 172px;
             height: 172px;
             background: #fff;
             padding: 1px;
             box-sizing: border-box;
-            border: 2px solid #111;
+            border: none;
         }
 
         .front .qr img {
