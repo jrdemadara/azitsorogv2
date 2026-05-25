@@ -7,6 +7,7 @@
         $backBg = asset('images/LNB_Brgy_ID_Back_Blank.png');
         $name = $this->fullName();
         $position = 'PUNONG BARANGAY';
+        $mockQrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=' . urlencode((string) $record->id);
     @endphp
 
     <style>
@@ -95,13 +96,17 @@
             top: 424px;
             width: 172px;
             height: 172px;
-            background:
-                repeating-linear-gradient(0deg, #000 0 6px, #fff 6px 12px),
-                repeating-linear-gradient(90deg, #000 0 6px, #fff 6px 12px);
-            background-blend-mode: difference;
-            padding: 0;
+            background: #fff;
+            padding: 1px;
             box-sizing: border-box;
             border: 2px solid #111;
+        }
+
+        .front .qr img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: contain;
         }
 
         .back .emergency {
@@ -178,7 +183,9 @@
             <div class="field birthdate"><div style="font-size: 16px; color: #2a2a2a;">Date of Birth</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->birthdate() }}</div></div>
             <div class="field gender"><div style="font-size: 16px; color: #2a2a2a;">Gender</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->gender) }}</div></div>
 
-            <div class="qr" aria-label="Mock QR"></div>
+            <div class="qr" aria-label="QR">
+                <img src="{{ $mockQrUrl }}" alt="QR Code">
+            </div>
             <div class="signature-label">Signature</div>
         </div>
 
