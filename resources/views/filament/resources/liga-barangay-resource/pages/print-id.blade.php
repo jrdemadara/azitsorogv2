@@ -38,7 +38,7 @@
         .front .photo {
             position: absolute;
             left: 56px;
-            top: 162px;
+            top: 154px;
             width: 238px;
             height: 268px;
             object-fit: cover;
@@ -77,7 +77,7 @@
             line-height: 1;
         }
 
-        .front .name { left: 338px; top: 166px; width: 604px; }
+        .front .name { left: 338px; top: 160px; width: 604px; }
         .front .position { left: 338px; top: 232px; width: 290px; }
         .front .idno { left: 650px; top: 232px; width: 200px; }
         .front .barangay { left: 338px; top: 288px; width: 290px; }
