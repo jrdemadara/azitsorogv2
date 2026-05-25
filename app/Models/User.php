@@ -19,7 +19,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return in_array($this->role, [self::ROLE_ADMIN, self::ROLE_LIGA_PRINTER], true);
+        return in_array($this->role ?? self::ROLE_ADMIN, [self::ROLE_ADMIN, self::ROLE_LIGA_PRINTER], true);
     }
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasApiTokens;
@@ -53,7 +53,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function isAdmin(): bool
     {
-        return $this->role === self::ROLE_ADMIN;
+        return ($this->role ?? self::ROLE_ADMIN) === self::ROLE_ADMIN;
     }
 
     public function isLigaPrinter(): bool
