@@ -7,6 +7,7 @@ use App\Models\LigaBarangay;
 use Filament\Actions;
 use Filament\Resources\Pages\Page;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class PrintLigaBarangayId extends Page
@@ -108,9 +109,21 @@ class PrintLigaBarangayId extends Page
 
         if (!$foundPath) {
             $resolvedPath = '[missing] ' . implode(' OR ', $candidates);
+            Log::warning('ID print image missing', [
+                'disk' => 'external_storage',
+                'root' => config('filesystems.disks.external_storage.root'),
+                'relative' => $relativePath,
+                'candidates' => $candidates,
+                'record_id' => $this->record->id ?? null,
+            ]);
             return '';
         }
         $resolvedPath = $foundPath;
+        Log::info('ID print image found', [
+            'disk' => 'external_storage',
+            'path' => $foundPath,
+            'record_id' => $this->record->id ?? null,
+        ]);
 
         $bytes = $disk->get($foundPath);
         $mime = $this->mimeTypeFromPath($foundPath);

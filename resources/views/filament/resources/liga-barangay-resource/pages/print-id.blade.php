@@ -155,10 +155,14 @@
         <div class="id-card front" style="background-image: url('{{ $frontBg }}')">
             @if($this->photoDataUri)
                 <img class="photo" src="{{ $this->photoDataUri }}" alt="Photo">
+            @else
+                <div class="photo" style="display:flex; align-items:center; justify-content:center; color:#666; font-weight:700;">NO PHOTO</div>
             @endif
 
             @if($this->signatureDataUri)
                 <img class="signature" src="{{ $this->signatureDataUri }}" alt="Signature">
+            @else
+                <div class="signature" style="display:flex; align-items:center; justify-content:center; color:#666; font-size:12px; font-weight:700;">NO SIGNATURE</div>
             @endif
 
             <div class="field name">
