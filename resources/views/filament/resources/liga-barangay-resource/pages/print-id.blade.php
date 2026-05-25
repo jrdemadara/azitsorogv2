@@ -3,8 +3,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     @php
-        $frontBg = asset('images/LNB_Brgy_ID_Front_Format.png');
-        $backBg = asset('images/LNB_Brgy_ID_Back_Format.png');
+        $frontBg = asset('images/LNB_Brgy_ID_Front_Blank.png');
+        $backBg = asset('images/LNB_Brgy_ID_Back_Blank.png');
         $name = $this->fullName();
         $signatureName = strtoupper(trim(($record->firstname ?? '') . ' ' . ($record->lastname ?? '')));
         $position = strtoupper((string)($record->term ?? 'PUNONG BARANGAY'));
@@ -57,27 +57,27 @@
 
         .front .field {
             position: absolute;
-            font-size: 23px;
-            line-height: 1.18;
+            font-size: 16px;
+            line-height: 1.22;
         }
 
         .front .value-strong {
             font-weight: 700;
-            font-size: 40px;
+            font-size: 28px;
             line-height: 1;
         }
 
-        .front .name { left: 338px; top: 186px; width: 604px; }
-        .front .position { left: 338px; top: 244px; width: 290px; }
-        .front .idno { left: 650px; top: 244px; width: 200px; }
-        .front .barangay { left: 338px; top: 304px; width: 290px; }
-        .front .city { left: 650px; top: 304px; width: 290px; }
-        .front .region { left: 338px; top: 365px; width: 290px; }
-        .front .province { left: 650px; top: 365px; width: 290px; }
-        .front .address { left: 338px; top: 427px; width: 590px; }
-        .front .validity { left: 338px; top: 516px; width: 430px; }
-        .front .birthdate { left: 338px; top: 581px; width: 200px; }
-        .front .gender { left: 650px; top: 581px; width: 200px; }
+        .front .name { left: 338px; top: 172px; width: 604px; }
+        .front .position { left: 338px; top: 232px; width: 290px; }
+        .front .idno { left: 650px; top: 232px; width: 200px; }
+        .front .barangay { left: 338px; top: 288px; width: 290px; }
+        .front .city { left: 650px; top: 288px; width: 290px; }
+        .front .region { left: 338px; top: 345px; width: 290px; }
+        .front .province { left: 650px; top: 345px; width: 290px; }
+        .front .address { left: 338px; top: 403px; width: 590px; }
+        .front .validity { left: 338px; top: 493px; width: 430px; }
+        .front .birthdate { left: 338px; top: 552px; width: 240px; }
+        .front .gender { left: 650px; top: 552px; width: 240px; }
 
         .front .qr {
             position: absolute;
@@ -96,37 +96,13 @@
             border: 2px solid #111;
         }
 
-        .back .signatory-sign {
-            position: absolute;
-            left: 425px;
-            top: 136px;
-            width: 150px;
-            height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 54px;
-            font-style: italic;
-        }
-
-        .back .signatory-name {
-            position: absolute;
-            left: 192px;
-            top: 220px;
-            width: 640px;
-            text-align: center;
-            font-size: 45px;
-            font-weight: 700;
-            line-height: 1;
-        }
-
         .back .emergency {
             position: absolute;
             left: 190px;
-            top: 392px;
+            top: 410px;
             width: 640px;
             text-align: center;
-            font-size: 52px;
+            font-size: 34px;
             line-height: 1.15;
         }
 
@@ -167,27 +143,27 @@
 
             <div class="field name">
                 <div style="font-size: 18px; color: #2a2a2a;">Last Name, First Name, Middle Name</div>
-                <div class="value-strong">{{ $name }}</div>
+                <div class="value-strong" style="font-size: 40px;">{{ $name }}</div>
             </div>
 
             <div class="field position">
                 <div style="font-size: 18px; color: #2a2a2a;">Position</div>
-                <div style="font-size: 39px; font-weight: 700; line-height:1;">{{ $position }}</div>
+                <div style="font-size: 32px; font-weight: 700; line-height:1;">{{ $position }}</div>
             </div>
 
             <div class="field idno">
                 <div style="font-size: 18px; color: #2a2a2a;">ID No.</div>
-                <div style="font-size: 39px; font-weight: 700; line-height:1;">{{ $record->id }}</div>
+                <div style="font-size: 32px; font-weight: 700; line-height:1;">{{ $record->id }}</div>
             </div>
 
-            <div class="field barangay"><div style="font-size: 18px; color: #2a2a2a;">Barangay</div><div style="font-size:45px; font-weight:700; line-height:1;">{{ $record->barangay ?: 'N/A' }}</div></div>
-            <div class="field city"><div style="font-size: 18px; color: #2a2a2a;">Municipality/City</div><div style="font-size:45px; font-weight:700; line-height:1;">{{ $record->city ?: 'N/A' }}</div></div>
-            <div class="field region"><div style="font-size: 18px; color: #2a2a2a;">Region</div><div style="font-size:45px; font-weight:700; line-height:1;">{{ $record->region ?: 'N/A' }}</div></div>
-            <div class="field province"><div style="font-size: 18px; color: #2a2a2a;">Province</div><div style="font-size:45px; font-weight:700; line-height:1;">{{ $record->province ?: 'N/A' }}</div></div>
-            <div class="field address"><div style="font-size: 18px; color: #2a2a2a;">Address</div><div style="font-size: 40px; font-weight:700; line-height:1.05;">{{ $record->home_address ?: 'N/A' }}</div></div>
-            <div class="field validity"><div style="font-size: 18px; color: #2a2a2a;">Validity Period</div><div style="font-size:46px; font-weight:700; line-height:1;">{{ $this->validityPeriod() }}</div></div>
-            <div class="field birthdate"><div style="font-size: 18px; color: #2a2a2a;">Date of Birth</div><div style="font-size:52px; font-weight:700; line-height:1;">{{ $this->birthdate() }}</div></div>
-            <div class="field gender"><div style="font-size: 18px; color: #2a2a2a;">Gender</div><div style="font-size:52px; font-weight:700; line-height:1;">{{ $record->gender ?: 'N/A' }}</div></div>
+            <div class="field barangay"><div style="font-size: 16px; color: #2a2a2a;">Barangay</div><div style="font-size:40px; font-weight:700; line-height:1;">{{ $record->barangay ?: 'N/A' }}</div></div>
+            <div class="field city"><div style="font-size: 16px; color: #2a2a2a;">Municipality/City</div><div style="font-size:40px; font-weight:700; line-height:1;">{{ $record->city ?: 'N/A' }}</div></div>
+            <div class="field region"><div style="font-size: 16px; color: #2a2a2a;">Region</div><div style="font-size:40px; font-weight:700; line-height:1;">{{ $record->region ?: 'N/A' }}</div></div>
+            <div class="field province"><div style="font-size: 16px; color: #2a2a2a;">Province</div><div style="font-size:40px; font-weight:700; line-height:1;">{{ $record->province ?: 'N/A' }}</div></div>
+            <div class="field address"><div style="font-size: 16px; color: #2a2a2a;">Address</div><div style="font-size: 34px; font-weight:700; line-height:1.1;">{{ $record->home_address ?: 'N/A' }}</div></div>
+            <div class="field validity"><div style="font-size: 16px; color: #2a2a2a;">Validity Period</div><div style="font-size:36px; font-weight:700; line-height:1;">{{ $this->validityPeriod() }}</div></div>
+            <div class="field birthdate"><div style="font-size: 16px; color: #2a2a2a;">Date of Birth</div><div style="font-size:38px; font-weight:700; line-height:1;">{{ $this->birthdate() }}</div></div>
+            <div class="field gender"><div style="font-size: 16px; color: #2a2a2a;">Gender</div><div style="font-size:38px; font-weight:700; line-height:1;">{{ $record->gender ?: 'N/A' }}</div></div>
 
             <div class="qr">
                 <div>
@@ -198,13 +174,10 @@
         </div>
 
         <div class="id-card back" style="background-image: url('{{ $backBg }}')">
-            <div class="signatory-sign">/s/</div>
-            <div class="signatory-name">HON. MARIA KATRINA JESSICA G. DY</div>
-
             <div class="emergency">
                 <div style="font-size: 24px; font-weight: 700;">EMERGENCY CONTACT</div>
-                <div style="font-size: 44px;">{{ $record->emergency_contact_person ?: 'N/A' }}</div>
-                <div style="font-size: 52px;">{{ $record->emergency_contact_number ?: 'N/A' }}</div>
+                <div style="font-size: 40px;">{{ $record->emergency_contact_person ?: 'N/A' }}</div>
+                <div style="font-size: 44px;">{{ $record->emergency_contact_number ?: 'N/A' }}</div>
             </div>
         </div>
     </div>
