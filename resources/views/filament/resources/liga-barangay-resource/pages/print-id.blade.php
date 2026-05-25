@@ -1,7 +1,7 @@
 <x-filament-panels::page>
     @php
-        $frontBg = asset('resources/images/LNB_Brgy ID_Front_Format.png');
-        $backBg = asset('resources/images/LNB_Brgy ID_Back_Format.png');
+        $frontBg = asset('id-assets/LNB_Brgy ID_Front_Format.png');
+        $backBg = asset('id-assets/LNB_Brgy ID_Back_Format.png');
         $name = $this->fullName();
         $signatureName = strtoupper(trim(($record->firstname ?? '') . ' ' . ($record->lastname ?? '')));
         $position = strtoupper((string)($record->term ?? 'PUNONG BARANGAY'));
@@ -10,7 +10,7 @@
     <style>
         @font-face {
             font-family: 'Galvji';
-            src: url('{{ asset('resources/fonts/Galvji.ttc') }}') format('truetype');
+            src: url('{{ asset('id-assets/Galvji.ttc') }}') format('truetype');
             font-weight: normal;
             font-style: normal;
         }
