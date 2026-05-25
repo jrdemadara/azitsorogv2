@@ -6,8 +6,7 @@
         $frontBg = asset('images/LNB_Brgy_ID_Front_Blank.png');
         $backBg = asset('images/LNB_Brgy_ID_Back_Blank.png');
         $name = $this->fullName();
-        $signatureName = strtoupper(trim(($record->firstname ?? '') . ' ' . ($record->lastname ?? '')));
-        $position = strtoupper((string)($record->term ?? 'PUNONG BARANGAY'));
+        $position = 'PUNONG BARANGAY';
     @endphp
 
     <style>
@@ -51,8 +50,19 @@
             left: 64px;
             top: 472px;
             width: 220px;
-            height: 64px;
+            height: 56px;
             object-fit: contain;
+        }
+
+        .front .signature-label {
+            position: absolute;
+            left: 64px;
+            top: 532px;
+            width: 220px;
+            text-align: center;
+            font-size: 15px;
+            color: #2a2a2a;
+            font-weight: 600;
         }
 
         .front .field {
@@ -85,14 +95,12 @@
             top: 424px;
             width: 172px;
             height: 172px;
-            background: #fff;
-            padding: 6px;
+            background:
+                repeating-linear-gradient(0deg, #000 0 6px, #fff 6px 12px),
+                repeating-linear-gradient(90deg, #000 0 6px, #fff 6px 12px);
+            background-blend-mode: difference;
+            padding: 0;
             box-sizing: border-box;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            text-align: center;
             border: 2px solid #111;
         }
 
@@ -143,40 +151,36 @@
 
             <div class="field name">
                 <div style="font-size: 18px; color: #2a2a2a;">Last Name, First Name, Middle Name</div>
-                <div class="value-strong" style="font-size: 40px;">{{ $name }}</div>
+                <div class="value-strong" style="font-size: 24px;">{{ $name }}</div>
             </div>
 
             <div class="field position">
                 <div style="font-size: 18px; color: #2a2a2a;">Position</div>
-                <div style="font-size: 32px; font-weight: 700; line-height:1;">{{ $position }}</div>
+                <div style="font-size: 21px; font-weight: 700; line-height:1.05;">{{ $position }}</div>
             </div>
 
             <div class="field idno">
                 <div style="font-size: 18px; color: #2a2a2a;">ID No.</div>
-                <div style="font-size: 32px; font-weight: 700; line-height:1;">{{ $record->id }}</div>
+                <div style="font-size: 21px; font-weight: 700; line-height:1.05;">{{ $record->id }}</div>
             </div>
 
-            <div class="field barangay"><div style="font-size: 16px; color: #2a2a2a;">Barangay</div><div style="font-size:40px; font-weight:700; line-height:1;">{{ $record->barangay ?: 'N/A' }}</div></div>
-            <div class="field city"><div style="font-size: 16px; color: #2a2a2a;">Municipality/City</div><div style="font-size:40px; font-weight:700; line-height:1;">{{ $record->city ?: 'N/A' }}</div></div>
-            <div class="field region"><div style="font-size: 16px; color: #2a2a2a;">Region</div><div style="font-size:40px; font-weight:700; line-height:1;">{{ $record->region ?: 'N/A' }}</div></div>
-            <div class="field province"><div style="font-size: 16px; color: #2a2a2a;">Province</div><div style="font-size:40px; font-weight:700; line-height:1;">{{ $record->province ?: 'N/A' }}</div></div>
-            <div class="field address"><div style="font-size: 16px; color: #2a2a2a;">Address</div><div style="font-size: 34px; font-weight:700; line-height:1.1;">{{ $record->home_address ?: 'N/A' }}</div></div>
-            <div class="field validity"><div style="font-size: 16px; color: #2a2a2a;">Validity Period</div><div style="font-size:36px; font-weight:700; line-height:1;">{{ $this->validityPeriod() }}</div></div>
-            <div class="field birthdate"><div style="font-size: 16px; color: #2a2a2a;">Date of Birth</div><div style="font-size:38px; font-weight:700; line-height:1;">{{ $this->birthdate() }}</div></div>
-            <div class="field gender"><div style="font-size: 16px; color: #2a2a2a;">Gender</div><div style="font-size:38px; font-weight:700; line-height:1;">{{ $record->gender ?: 'N/A' }}</div></div>
+            <div class="field barangay"><div style="font-size: 16px; color: #2a2a2a;">Barangay</div><div style="font-size:20px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->barangay) }}</div></div>
+            <div class="field city"><div style="font-size: 16px; color: #2a2a2a;">Municipality/City</div><div style="font-size:20px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->city) }}</div></div>
+            <div class="field region"><div style="font-size: 16px; color: #2a2a2a;">Region</div><div style="font-size:20px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->region) }}</div></div>
+            <div class="field province"><div style="font-size: 16px; color: #2a2a2a;">Province</div><div style="font-size:20px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->province) }}</div></div>
+            <div class="field address"><div style="font-size: 16px; color: #2a2a2a;">Address</div><div style="font-size: 20px; font-weight:700; line-height:1.18;">{{ $this->titleCase($record->home_address) }}</div></div>
+            <div class="field validity"><div style="font-size: 16px; color: #2a2a2a;">Validity Period</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->validityPeriod() }}</div></div>
+            <div class="field birthdate"><div style="font-size: 16px; color: #2a2a2a;">Date of Birth</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->birthdate() }}</div></div>
+            <div class="field gender"><div style="font-size: 16px; color: #2a2a2a;">Gender</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->gender) }}</div></div>
 
-            <div class="qr">
-                <div>
-                    <strong>QR</strong><br>
-                    ID: {{ $record->id }}
-                </div>
-            </div>
+            <div class="qr" aria-label="Mock QR"></div>
+            <div class="signature-label">Signature</div>
         </div>
 
         <div class="id-card back" style="background-image: url('{{ $backBg }}')">
             <div class="emergency">
                 <div style="font-size: 24px; font-weight: 700;">EMERGENCY CONTACT</div>
-                <div style="font-size: 40px;">{{ $record->emergency_contact_person ?: 'N/A' }}</div>
+                <div style="font-size: 40px;">{{ $this->titleCase($record->emergency_contact_person) }}</div>
                 <div style="font-size: 44px;">{{ $record->emergency_contact_number ?: 'N/A' }}</div>
             </div>
         </div>

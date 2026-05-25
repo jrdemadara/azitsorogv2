@@ -66,7 +66,7 @@ class PrintLigaBarangayId extends Page
             $this->record->extension,
         ])));
 
-        return $name !== '' ? $name : 'N/A';
+        return $name !== '' ? $this->titleCase($name) : 'N/A';
     }
 
     public function birthdate(): string
@@ -88,6 +88,16 @@ class PrintLigaBarangayId extends Page
         }
 
         return trim($year . ' - ' . $term);
+    }
+
+    public function titleCase(?string $value): string
+    {
+        $value = trim((string) $value);
+        if ($value === '') {
+            return 'N/A';
+        }
+
+        return mb_convert_case(mb_strtolower($value), MB_CASE_TITLE, 'UTF-8');
     }
 
     private function loadPrivateImageAsDataUri(string $relativePath, string &$resolvedPath = ''): string
