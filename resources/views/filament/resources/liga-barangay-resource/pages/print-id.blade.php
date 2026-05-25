@@ -71,7 +71,7 @@
         .front .signature-label {
             position: absolute;
             left: 36px;
-            top: 520px;
+            top: 512px;
             width: 278px;
             text-align: center;
             font-size: 15px;
