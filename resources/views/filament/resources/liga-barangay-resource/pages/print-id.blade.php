@@ -22,6 +22,9 @@
             display: grid;
             gap: 18px;
         }
+        .print-debug {
+            display: block;
+        }
 
         .id-card {
             position: relative;
@@ -139,16 +142,43 @@
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
+            html, body {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
             body * { visibility: hidden; }
             .id-print-wrapper, .id-print-wrapper * { visibility: visible; }
-            .id-print-wrapper { position: absolute; left: 0; top: 0; }
-            .id-card { border: none; page-break-inside: avoid; margin-bottom: 14px; }
+            .id-print-wrapper {
+                position: absolute;
+                left: 0;
+                top: 0;
+                display: block !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .print-debug {
+                display: none !important;
+            }
+            .id-card {
+                border: none;
+                page-break-inside: avoid;
+                break-inside: avoid;
+                margin: 0 !important;
+            }
+            .id-card.front {
+                page-break-after: always;
+                break-after: page;
+            }
+            .id-card.back {
+                page-break-after: auto;
+                break-after: auto;
+            }
         }
     </style>
 
     <div class="id-print-wrapper" x-data x-on:print-page.window="window.print()">
         @if($this->shouldShowDebugInfo())
-            <div style="font-size:12px; background:#fffbe6; border:1px solid #e7d58a; padding:8px; margin-bottom:8px;">
+            <div class="print-debug" style="font-size:12px; background:#fffbe6; border:1px solid #e7d58a; padding:8px; margin-bottom:8px;">
                 <strong>Debug:</strong><br>
                 Photo DB value: {{ $record->photo ?: '[empty]' }}<br>
                 Signature DB value: {{ $record->signature ?: '[empty]' }}<br>
