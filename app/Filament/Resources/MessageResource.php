@@ -94,9 +94,9 @@ class MessageResource extends Resource
                     ->placeholder('—'),
                 Tables\Columns\TextColumn::make('message')
                     ->label('Message')
-                    ->limit(50)
+                    ->wrap()
                     ->tooltip(fn ($record) => $record->message)
-                    ->wrap(),
+                    ->lineClamp(4),
                 Tables\Columns\IconColumn::make('is_read')
                     ->label('Read')
                     ->boolean()
