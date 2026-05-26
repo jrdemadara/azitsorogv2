@@ -85,7 +85,7 @@ class LigaBarangayResource extends Resource
             ])
             ->actions([
                 Tables\Actions\Action::make("print_id")
-                    ->label("Print ID")
+                    ->label("Print")
                     ->icon("heroicon-o-printer")
                     ->color("primary")
                     ->url(
