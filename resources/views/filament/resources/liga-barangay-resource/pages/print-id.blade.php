@@ -20,13 +20,13 @@
 
         .id-print-wrapper {
             display: grid;
-            gap: 4mm;
+            gap: 18px;
         }
 
         .id-card {
             position: relative;
-            width: 85.6mm;
-            height: 53.98mm;
+            width: 1000px;
+            height: 620px;
             overflow: hidden;
             font-family: 'Galvji', Arial, sans-serif;
             color: #101010;
@@ -142,7 +142,7 @@
             body * { visibility: hidden; }
             .id-print-wrapper, .id-print-wrapper * { visibility: visible; }
             .id-print-wrapper { position: absolute; left: 0; top: 0; }
-            .id-card { border: none; page-break-inside: avoid; margin: 0; }
+            .id-card { border: none; page-break-inside: avoid; margin-bottom: 14px; }
         }
     </style>
 
