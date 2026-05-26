@@ -11,6 +11,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
@@ -95,6 +96,7 @@ class LigaBarangayResource extends Resource
                     )
                     ->openUrlInNewTab(),
             ])
+            ->actionsPosition(ActionsPosition::BeforeCells)
             ->headerActions([
                 Tables\Actions\Action::make("Download")
                     ->form([
