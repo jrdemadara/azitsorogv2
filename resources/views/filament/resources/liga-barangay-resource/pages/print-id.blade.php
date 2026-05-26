@@ -32,7 +32,7 @@
             height: 620px;
             overflow: hidden;
             font-family: 'Galvji', Arial, sans-serif;
-            color: #101010;
+            color: #000;
             border: 1px solid #d8d8d8;
         }
 
@@ -78,7 +78,7 @@
             width: 278px;
             text-align: center;
             font-size: 15px;
-            color: #1f1f1f;
+            color: #000;
             font-weight: 700;
             text-shadow: 0 0 3px rgba(255, 255, 255, 0.85);
         }
@@ -194,43 +194,43 @@
             @if($this->photoDataUri)
                 <img class="photo" src="{{ $this->photoDataUri }}" alt="Photo">
             @else
-                <div class="photo" style="display:flex; align-items:center; justify-content:center; color:#666; font-weight:700;">NO PHOTO</div>
+                <div class="photo" style="display:flex; align-items:center; justify-content:center; color:#000; font-weight:700;">NO PHOTO</div>
             @endif
 
             @if($this->signatureDataUri)
                 <img class="signature" src="{{ $this->signatureDataUri }}" alt="Signature">
             @else
-                <div class="signature" style="display:flex; align-items:center; justify-content:center; color:#666; font-size:12px; font-weight:700;">NO SIGNATURE</div>
+                <div class="signature" style="display:flex; align-items:center; justify-content:center; color:#000; font-size:12px; font-weight:700;">NO SIGNATURE</div>
             @endif
 
             <div class="field name">
-                <div style="font-size: 18px; color: #2a2a2a;">Last Name, First Name, Middle Name</div>
+                <div style="font-size: 18px; color: #000;">Last Name, First Name, Middle Name</div>
                 <div class="value-strong" style="font-size: 24px;">{{ $name }}</div>
             </div>
 
             <div class="field position">
-                <div style="font-size: 18px; color: #2a2a2a;">Position</div>
+                <div style="font-size: 18px; color: #000;">Position</div>
                 <div style="font-size: 21px; font-weight: 700; line-height:1.05;">{{ $position }}</div>
             </div>
 
             <div class="field idno">
-                <div style="font-size: 18px; color: #2a2a2a;">ID No.</div>
+                <div style="font-size: 18px; color: #000;">ID No.</div>
                 <div style="font-size: 21px; font-weight: 700; line-height:1.05;">{{ $record->id }}</div>
             </div>
 
-            <div class="field barangay"><div style="font-size: 16px; color: #2a2a2a;">Barangay</div><div style="font-size:{{ $this->placeFontSize($record->barangay) }}px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->barangay) }}</div></div>
-            <div class="field city"><div style="font-size: 16px; color: #2a2a2a;">Municipality/City</div><div style="font-size:{{ $this->placeFontSize($record->city) }}px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->city) }}</div></div>
-            <div class="field region"><div style="font-size: 16px; color: #2a2a2a;">Region</div><div style="font-size:{{ $this->placeFontSize($record->region) }}px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->region) }}</div></div>
-            <div class="field province"><div style="font-size: 16px; color: #2a2a2a;">Province</div><div style="font-size:{{ $this->placeFontSize($record->province) }}px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->province) }}</div></div>
+            <div class="field barangay"><div style="font-size: 16px; color: #000;">Barangay</div><div style="font-size:{{ $this->placeFontSize($record->barangay) }}px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->barangay) }}</div></div>
+            <div class="field city"><div style="font-size: 16px; color: #000;">Municipality/City</div><div style="font-size:{{ $this->placeFontSize($record->city) }}px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->city) }}</div></div>
+            <div class="field region"><div style="font-size: 16px; color: #000;">Region</div><div style="font-size:{{ $this->placeFontSize($record->region) }}px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->region) }}</div></div>
+            <div class="field province"><div style="font-size: 16px; color: #000;">Province</div><div style="font-size:{{ $this->placeFontSize($record->province) }}px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->province) }}</div></div>
             <div class="field address">
-                <div style="font-size: 16px; color: #2a2a2a;">Address</div>
+                <div style="font-size: 16px; color: #000;">Address</div>
                 <div style="font-size: {{ $this->addressFontSize($record->home_address) }}px; font-weight:700; line-height:1.18; overflow-wrap:anywhere; word-break:break-word; max-height:78px; overflow:hidden;">
                     {{ $this->titleCase($record->home_address) }}
                 </div>
             </div>
-            <div class="field validity"><div style="font-size: 16px; color: #2a2a2a;">Validity Period</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->validityPeriod() }}</div></div>
-            <div class="field birthdate"><div style="font-size: 16px; color: #2a2a2a;">Date of Birth</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->birthdate() }}</div></div>
-            <div class="field gender"><div style="font-size: 16px; color: #2a2a2a;">Gender</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->gender) }}</div></div>
+            <div class="field validity"><div style="font-size: 16px; color: #000;">Validity Period</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->validityPeriod() }}</div></div>
+            <div class="field birthdate"><div style="font-size: 16px; color: #000;">Date of Birth</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->birthdate() }}</div></div>
+            <div class="field gender"><div style="font-size: 16px; color: #000;">Gender</div><div style="font-size:21px; font-weight:700; line-height:1.1;">{{ $this->titleCase($record->gender) }}</div></div>
 
             <div class="qr" aria-label="QR">
                 <img src="{{ $mockQrUrl }}" alt="QR Code">
