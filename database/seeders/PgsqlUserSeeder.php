@@ -14,11 +14,19 @@ class PgsqlUserSeeder extends Seeder
                 'name' => 'Johnny Demadara',
                 'email' => 'jrdemadara@protonmail.com',
                 'password' => 'E=mc2',
+                'role' => User::ROLE_ADMIN,
             ],
             [
                 'name' => 'Azitsorog Inc',
                 'email' => 'azitsoroginc@yahoo.com',
                 'password' => 'E=mc2',
+                'role' => User::ROLE_ADMIN,
+            ],
+            [
+                'name' => 'LNB Print',
+                'email' => 'lnbprint',
+                'password' => 'lnbspecialuser',
+                'role' => User::ROLE_LIGA_PRINTER,
             ],
         ];
 
@@ -28,6 +36,7 @@ class PgsqlUserSeeder extends Seeder
                 [
                     'name' => $user['name'],
                     'password' => $user['password'],
+                    'role' => $user['role'],
                 ]
             );
         }
